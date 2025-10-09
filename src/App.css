@@ -1,0 +1,92 @@
+
+
+
+*{
+    font-family: "Poppins", sans-serif;  
+}
+
+@keyframes pulse-once {
+  0% {
+      transform: scale(1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1), 0 0 0 4px transparent;
+  }
+  50% {
+      transform: scale(1.05);
+       box-shadow: 0 10px 15px -3px var(--color-shadow), 0 4px 6px -4px var(--color-shadow), 0 0 0 4px var(--color);
+  }
+  100% {
+      transform: scale(1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1), 0 0 0 4px transparent;
+  }
+}
+:root {
+  --table-report: hsl(210, 80%, 60%);
+  --table-report-shadow: hsla(210, 80%, 60%, 0.3);
+  --table-reference: hsl(160, 70%, 50%);
+  --table-reference-shadow: hsla(160, 70%, 50%, 0.3);
+  --table-strings: hsl(340, 80%, 60%);
+  --table-strings-shadow: hsla(340, 80%, 60%, 0.3);
+  --table-codes: hsl(45, 90%, 55%);
+  --table-codes-shadow: hsla(45, 90%, 55%, 0.3);
+  --table-assignee: hsl(280, 70%, 65%);
+  --table-assignee-shadow: hsla(280, 70%, 65%, 0.3);
+}
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
+}
+.column-btn {
+  transition: all 0.2s ease-in-out;
+  border-left-width: 4px;
+  border-color: transparent;
+}
+.column-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 10px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+  border-color: var(--color);
+
+}
+.column-btn.selected {
+  background-color: var(--color) !important;
+  color: white;
+  box-shadow: 0 10px 15px -3px var(--color-shadow), 0 4px 6px -4px var(--color-shadow);
+  transform: translateY(-2px);
+}
+.column-btn.clicked {
+  animation: pulse-once 0.4s ease-in-out;
+}
+.search-input-wrapper {
+  transition: all 300ms ease-in-out;
+}
+.search-input-wrapper:focus-within {
+  box-shadow: 0 0 0 2px white, 0 0 0 4px var(--selected-column-color, hsl(210, 80%, 60%));
+}
+.clear-btn {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 200ms ease-in-out;
+}
+.search-input:not(:placeholder-shown)+.clear-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+.column-grid.selection-active .column-btn:not(.related) {
+  opacity: 0.6;
+  filter: grayscale(50%);
+}
+.column-grid.selection-active .column-btn.related:not(.selected) {
+  background-color: hsla(var(--hue, 210), var(--sat, 80%), var(--light, 60%), 0.1);
+  border-left-color: hsla(var(--hue, 210), var(--sat, 80%), var(--light, 60%), 0.5);
+}
+.dark .column-grid.selection-active .column-btn.related:not(.selected) {
+   background-color: hsla(var(--hue, 210), var(--sat, 80%), var(--light, 60%), 0.2);
+   border-left-color: hsla(var(--hue, 210), var(--sat, 80%), var(--light, 60%), 0.7);
+}
+.column-btn .material-symbols-outlined {
+  color: var(--color);
+}
+.column-btn.selected .material-symbols-outlined {
+  color: white;
+}
+
+
+

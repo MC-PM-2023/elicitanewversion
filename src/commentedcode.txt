@@ -1,0 +1,633 @@
+App.jsx
+
+// import React from 'react'
+// import { Router,Route } from 'react-router-dom'
+// import './App.css'
+// import Header from './components/Header'
+// import Home from './pages/Home'
+// import Footer from './components/Footer'
+
+// function App() {
+
+//   return (
+//     <>
+//   <Header />
+//  <Home/>
+//  <Footer/>
+    
+//     </>
+//   )
+// }
+
+// export default App
+
+//correct code without using axios
+// import React, { useEffect, useState } from 'react';
+// import ColumnSelector from './components/ColumnSelector';
+// import Modal from './components/Modal';
+// import ResultsTable from './components/ResultsTable';
+// import Header from './components/Header'
+// import './App.css'
+// import Footer from './components/Footer';
+// const BASE_URL = 'http://34.180.7.64:3070'; // adjust if your Flask runs elsewhere
+
+// export default function App() {
+//   const [columns, setColumns] = useState([]);
+//   const [multiColumns, setMultiColumns] = useState({});
+//   const [selectedColumn, setSelectedColumn] = useState(null);
+//   const [selectedTable, setSelectedTable] = useState(null);
+//   const [results, setResults] = useState([]);
+//   const [searchTerm, setSearchTerm] = useState('');
+//   const [loading, setLoading] = useState(false);
+//   const [modalColumn, setModalColumn] = useState(null);
+//   const [error, setError] = useState('');
+
+//   const colorMap = {
+//     'Assignee_Table': 'purple',
+//     'IPC_CPC_Code': 'indigo',
+//     'Reference_Table': 'teal',
+//     'Report_Data': 'amber',
+//     'Strings': 'lime'
+//   };
+
+//   useEffect(() => {
+//     fetch(`${BASE_URL}/api/all-columns`)
+//       .then(res => res.json())
+//       .then(data => {
+//         if (data.success) {
+//           const tables = data.data[0];
+//           const temp = [];
+//           const multi = {};
+
+//           for (let table in tables) {
+//             for (let column in tables[table]) {
+//               temp.push({
+//                 table,
+//                 column,
+//                 color: colorMap[table] || 'gray'
+//               });
+//             }
+//           }
+
+//           const counts = temp.reduce((acc, col) => {
+//             acc[col.column] = (acc[col.column] || 0) + 1;
+//             return acc;
+//           }, {});
+
+//           const singles = temp.filter(col => counts[col.column] === 1);
+//           temp.forEach(col => {
+//             if (counts[col.column] > 1) {
+//               if (!multi[col.column]) {
+//                 multi[col.column] = [];
+//               }
+//               multi[col.column].push(col);
+//             }
+//           });
+
+//           setColumns(singles);
+//           setMultiColumns(multi);
+//         }
+//       })
+//       .catch(err => {
+//         console.error('Error loading columns:', err);
+//         setError('Failed to fetch columns');
+//       });
+//   }, []);
+
+//   const handleColumnSelect = (column, table) => {
+//     setSelectedColumn(column);
+//     setSelectedTable(table);
+//     setError('');
+//   };
+
+//   const handleSearch = async () => {
+//     if (!selectedColumn || !selectedTable || searchTerm.trim() === '') {
+//       setError('Please select a column and enter a search term.');
+//       return;
+//     }
+
+//     setLoading(true);
+//     setError('');
+//     setResults([]);
+
+//     try {
+//       const res = await fetch(
+//         `${BASE_URL}/api/search?table=${selectedTable}&column=${selectedColumn}&query=${encodeURIComponent(searchTerm)}`
+//       );
+//       const data = await res.json();
+//       if (data.success) {
+//         setResults(data.results);
+//       } else {
+//         setError(data.message || 'Search failed');
+//       }
+//     } catch (e) {
+//       console.error('Search API error:', e);
+//       setError('Network error');
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div>
+//          <Header/>
+
+//     <div className="p-8 max-w-7xl mx-auto bg-white rounded-2xl  mt-3">
+//       {/* <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Elicita Search Dashboard</h1> */}
+
+//       <ColumnSelector
+//         columns={columns}
+//         multiColumns={multiColumns}
+//         onSelect={handleColumnSelect}
+//         openModal={setModalColumn}
+//         selectedColumn={selectedColumn}
+//         selectedTable={selectedTable}
+//       />
+
+//       {/* <div className="bg-white border border-gray-200 rounded-xl shadow-md p-5 flex items-center justify-between gap-4 mb-8">
+//         <div className="text-gray-600 text-xs font-medium">
+//           {selectedColumn && selectedTable ? (
+//             <span className={`bg-${(colorMap[selectedTable] || 'gray')}-200 text-${(colorMap[selectedTable] || 'gray')}-800 px-3 py-1 rounded-full  `}>
+//               {selectedTable} &gt; {selectedColumn}
+//             </span>
+//           ) : (
+//             'Please select a column to search.'
+//           )}
+//         </div>
+//         <input
+//           type="text"
+//           value={searchTerm}
+//           onChange={(e) => setSearchTerm(e.target.value)}
+//           placeholder="Search..."
+//           className="w-[500px] pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-700"
+//           onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+//         />
+//       </div> */}
+//       <div className="bg-white border border-gray-200 rounded-xl shadow-md p-5 mb-8 flex flex-col md:flex-row items-stretch md:items-center gap-4">
+//   {/* Column selection status */}
+//   <div className="text-gray-600 text-xs font-medium">
+//     {selectedColumn && selectedTable ? (
+//       <span
+//         className={`bg-${colorMap[selectedTable] || 'gray'}-200 text-${colorMap[selectedTable] || 'gray'}-800 px-3 py-1 rounded-full block text-center md:inline`}
+//       >
+//         {selectedTable} &gt; {selectedColumn}
+//       </span>
+//     ) : (
+//       <span className="block text-center md:text-left">
+//         {/* Please select column to search. */}
+//       </span>
+//     )}
+//   </div>
+
+//   {/* Search input */}
+//   <div className="w-full md:w-[500px] relative">
+//     <input
+//       type="text"
+//       value={searchTerm}
+//       onChange={(e) => setSearchTerm(e.target.value)}
+//       placeholder="Search..."
+//       className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-700"
+//       onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+//     />
+//     <svg
+//       xmlns="http://www.w3.org/2000/svg"
+//       className="absolute left-3 top-8 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none"
+//       fill="none"
+//       viewBox="0 0 24 24"
+//       stroke="currentColor"
+//       strokeWidth={2}
+//     >
+//       <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+//     </svg>
+//   </div>
+// </div>
+
+
+//       {loading ? (
+//         <div className="flex justify-center">
+//           <div className="loader border-4 border-t-4 border-purple-500 rounded-full w-6 h-6 animate-spin"></div>
+//         </div>
+//       ) : (
+//         <ResultsTable results={results} />
+//       )}
+
+//       {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+
+//       {modalColumn && (
+//         <Modal
+//           column={modalColumn}
+//           tables={multiColumns[modalColumn]}
+//           onSelect={(colObj) => {
+//             handleColumnSelect(colObj.column, colObj.table);
+//             setModalColumn(null);
+//           }}
+//           onClose={() => setModalColumn(null)}
+//         />
+//       )}
+//     </div>
+//     <Footer/>
+//     </div>
+//   );
+// }
+
+
+// import React, { useState } from 'react';
+// import ColumnSelector from './components/ColumnSelector';
+// import Modal from './components/Modal';
+// import ResultsTable from './components/ResultsTable';
+// import Header from './components/Header';
+// import Footer from './components/Footer';
+// import useColumns from './hooks/useColumns';
+// import useSearch from './hooks/useSearch';
+// import './App.css';
+
+// const colorMap = {
+//   'Assignee_Table': 'purple',
+//   'IPC_CPC_Code': 'indigo',
+//   'Reference_Table': 'teal',
+//   'Report_Data': 'amber',
+//   'Strings': 'lime'
+// };
+
+// export default function App() {
+//   const { columns, multiColumns, loading: loadingColumns, error: columnError } = useColumns();
+//   const { results, loading: loadingSearch, error: searchError, search } = useSearch();
+
+//   const [selectedColumn, setSelectedColumn] = useState(null);
+//   const [selectedTable, setSelectedTable] = useState(null);
+//   const [searchTerm, setSearchTerm] = useState('');
+//   const [modalColumn, setModalColumn] = useState(null);
+
+//   const handleColumnSelect = (column, table) => {
+//     setSelectedColumn(column);
+//     setSelectedTable(table);
+//   };
+
+//   const handleSearch = () => {
+//     search(selectedTable, selectedColumn, searchTerm);
+//   };
+
+//   return (
+//     <div>
+//       <Header />
+//       <div className="p-8 max-w-7xl mx-auto bg-white rounded-2xl mt-3">
+//         <ColumnSelector
+//           columns={columns}
+//           multiColumns={multiColumns}
+//           onSelect={handleColumnSelect}
+//           openModal={setModalColumn}
+//           selectedColumn={selectedColumn}
+//           selectedTable={selectedTable}
+//         />
+
+//         <div className="bg-white border border-gray-200 rounded-xl shadow-md p-5 mb-8 flex flex-col md:flex-row items-stretch md:items-center gap-4">
+//           <div className="text-gray-600 text-xs font-medium">
+//             {selectedColumn && selectedTable ? (
+//               <span
+//                 className={`bg-${colorMap[selectedTable] || 'gray'}-200 text-${colorMap[selectedTable] || 'gray'}-800 px-3 py-1 rounded-full block text-center md:inline`}
+//               >
+//                 {selectedTable} &gt; {selectedColumn}
+//               </span>
+//             ) : (
+//               <span className="block text-center md:text-left">
+//                 {/* Waiting for column selection */}
+//               </span>
+//             )}
+//           </div>
+
+//           <div className="w-full md:w-[500px] relative">
+//             <input
+//               type="text"
+//               value={searchTerm}
+//               onChange={(e) => setSearchTerm(e.target.value)}
+//               placeholder="Search..."
+//               className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-700"
+//               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+//             />
+//             <svg
+//               xmlns="http://www.w3.org/2000/svg"
+//               className="absolute left-3 top-8 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none"
+//               fill="none"
+//               viewBox="0 0 24 24"
+//               stroke="currentColor"
+//               strokeWidth={2}
+//             >
+//               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+//             </svg>
+//           </div>
+//         </div>
+
+//         {loadingColumns || loadingSearch ? (
+//           <div className="flex justify-center">
+//             <div className="loader border-4 border-t-4 border-purple-500 rounded-full w-6 h-6 animate-spin"></div>
+//           </div>
+//         ) : (
+//           <ResultsTable results={results} />
+//         )}
+
+//         {(columnError || searchError) && (
+//           <p className="text-red-500 text-center mt-4">{columnError || searchError}</p>
+//         )}
+
+//         {modalColumn && (
+//           <Modal
+//             column={modalColumn}
+//             tables={multiColumns[modalColumn]}
+//             onSelect={(colObj) => {
+//               handleColumnSelect(colObj.column, colObj.table);
+//               setModalColumn(null);
+//             }}
+//             onClose={() => setModalColumn(null)}
+//           />
+//         )}
+//       </div>
+
+//       <Footer />
+//     </div>
+//   );
+// }
+
+ColumnSelector.jsx (Without using framer motion)
+
+// import React from 'react';
+
+// export default function ColumnSelector({
+//   columns,
+//   multiColumns,
+//   onSelect,
+//   openModal,
+//   selectedColumn,
+//   selectedTable
+// }) {
+//   return (
+//     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mb-8">
+//       {Object.keys(multiColumns).map(colName => (
+//         <div
+//           key={colName}
+//           className="column-box p-4 bg-white rounded-xl shadow-md cursor-pointer flex flex-col items-center justify-center text-center space-y-2 text-gray-600 border border-gray-200 transition"
+//           onClick={() => openModal(colName)}
+
+//         >
+         
+//           <span className="font-medium">{colName.replace('_', ' ')}</span>
+//         </div>
+//       ))}
+
+//       {columns.map(col => (
+//         <div
+//           key={`${col.table}-${col.column}`}
+//           className="column-box p-4 bg-white rounded-xl shadow-md cursor-pointer flex flex-col items-center justify-center text-center space-y-2 text-gray-600 border border-gray-200 transition"
+//           onClick={() => onSelect(col.column, col.table)}
+//         >
+        
+//           <span className="font-medium">{col.column.replace('_', ' ')}</span>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
+
+
+//Mainbar.jsx code
+
+// // src/components/Mainbar.jsx
+// import React from 'react';
+// import { useShowtableColumns } from '../hooks/useShowtableColumns';
+
+// export const Mainbar = () => {
+
+//   const {error,loading,fetchColumns,showAllColumns}=useShowtableColumns()
+//   console.log(showAllColumns)
+
+//   return (
+//     <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+//       <div className="max-w-7xl mx-auto">
+//         {/* Search Section */}
+//         <div className="bg-white dark:bg-white backdrop-blur-sm rounded-xl shadow-xl p-6 md:p-8">
+//           <div className="flex flex-col gap-6" id="search-section">
+//             {/* Column Buttons Grid */}
+//             {/* <div className="column-grid selection-active grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-4 text-xs">
+//               {showAllColumns.map((col, i) => (
+//                 <button
+//                   key={i}
+                
+//                 // className={`column-btn group flex flex-col items-start text-left p-3 rounded-lg shadow-md ${col.selected ? 'selected' : ''} ${col.related ? 'related' : ''} ${col.bg }`}
+//                 className={`column-btn group flex flex-col items-start text-left p-3 rounded-lg shadow-md ${col.selected ? 'selected' : ''} ${col.related ? 'related' : ''}`}
+//                   data-color={col.color}
+//                   data-color-shadow={col.colorShadow}
+//                   data-column={col.column}
+//                   data-table={col.table}
+//                   style={col.style}
+//                 >
+//                   <span className="material-symbols-outlined text-xl mb-2">{col.icon}</span>
+//                   <span className={`font-semibold text-xs ${col.textColor || 'text-foreground-light dark:text-foreground-dark'}`}>{col.label}</span>
+//                 </button>
+//               ))}
+//             </div> */}
+// {Array.isArray(showAllColumns) && showAllColumns.length > 0 && (
+//   <div className="column-grid selection-active grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-4 text-xs">
+//     {showAllColumns.map((col, i) => (
+//       <button
+//         key={i}
+//         className={`column-btn group flex flex-col items-start text-left p-3 rounded-lg shadow-md ${col.selected ? 'selected' : ''} ${col.related ? 'related' : ''}`}
+//         data-color={col.color || ''}
+//         data-color-shadow={col.colorShadow || ''}
+//         data-column={col.column || ''}
+//         data-table={col.table || ''}
+//         style={col.style || {}}
+//       >
+//         <span className="material-symbols-outlined text-xl mb-2">{col.icon || 'view_column'}</span>
+//         <span className={`font-semibold text-xs ${col.textColor || 'text-foreground-light dark:text-foreground-dark'}`}>
+//           {col.label || ''}
+//         </span>
+//       </button>
+//     ))}
+//   </div>
+// )}
+
+
+//             {/* Search Context */}
+//             <div className="flex items-center gap-2 mb-2 text-sm" id="search-context">
+//               <span className="font-medium text-gray-500 dark:text-gray-400 ">Searching in:</span>
+//               <div className="flex items-center gap-2 px-3 py-1 rounded-full text-white" style={{ backgroundColor: 'var(--table-assignee)' }}>
+                
+//                 <span className="font-semibold" id="context-table">Assignee Data</span>
+//                 <span className="material-symbols-outlined text-base">chevron_right</span>
+//                 <span className="font-semibold" id="context-column">Status</span>
+//               </div>
+//             </div>
+
+//             {/* Search Input */}
+//             <div className="relative w-full search-input-wrapper rounded-xl" style={{ '--selected-column-color': 'var(--table-assignee)' }}>
+//               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+//                 <span className="material-symbols-outlined text-gray-400 dark:text-gray-500 transition-colors duration-300" style={{ color: 'var(--selected-column-color)' }}>search</span>
+//               </div>
+//               <input
+//                 className="search-input w-full pl-12 pr-12 py-4 form-input bg-background-light dark:bg-input-dark border border-border-light dark:border-border-dark rounded-xl text-lg placeholder-gray-400 dark:placeholder-gray-500 focus:ring-0 focus:border-transparent text-xs"
+//                 id="keyword-search"
+//                 name="keyword-search"
+//                 placeholder="Search Status..."
+//                 type="text"
+//                 defaultValue="In Progress"
+//               />
+//               <button
+//                 className="clear-btn absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer"
+//                 onClick={() => document.getElementById('keyword-search').value = ''}
+//               >
+//                 <span className="material-symbols-outlined text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">close</span>
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Results Table */}
+//         {/* <div className="mt-12 bg-white dark:bg-slate-900/80 backdrop-blur-sm rounded-xl shadow-xl p-6 md:p-8"> */}
+//           {/* <div className="flex flex-col md:flex-row items-center justify-between mb-6">
+//             <h3 className="text-2xl font-bold flex items-center gap-3">
+//               <span style={{ color: 'var(--table-assignee)' }}>Assignee Table</span>
+//               <span className="text-gray-500 dark:text-gray-400 font-normal">Results for</span>
+//               <span className="px-3 py-1 rounded-full text-xl font-semibold" style={{ backgroundColor: 'hsla(280, 70%, 65%, 0.1)', color: 'var(--table-assignee)' }}>
+//                 "In Progress"
+//               </span>
+//             </h3>
+//             <div className="flex items-center gap-4 mt-4 md:mt-0">
+            
+//             </div>
+//           </div> */}
+
+//           {/* <div className="overflow-x-auto">
+//             <table className="w-full text-left">
+//               <thead>
+//                 <tr className="border-b border-border-light dark:border-border-dark">
+//                   {["Assignee Name", "Assignee Team", "Assignment Date", "Status"].map(header => (
+//                     <th key={header} className="p-4 text-sm font-semibold text-gray-500 dark:text-gray-400 cursor-pointer hover:text-foreground-light dark:hover:text-foreground-dark">
+//                       {header} <span className="material-symbols-outlined text-xs align-middle">unfold_more</span>
+//                     </th>
+//                   ))}
+//                 </tr>
+//               </thead>
+//               <tbody>
+//                 {columns.map((row, idx) => (
+//                   <tr key={idx} className="border-b border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors">
+//                     <td className="p-4 font-medium">{row.name}</td>
+//                     <td className="p-4 text-gray-600 dark:text-gray-300">{row.team}</td>
+//                     <td className="p-4 text-gray-600 dark:text-gray-300">{row.date}</td>
+//                     <td className="p-4">
+//                       <span className={`px-2 py-1 text-xs font-semibold rounded-full ${row.statusClass}`}>{row.status}</span>
+//                     </td>
+//                   </tr>
+//                 ))}
+//               </tbody>
+//             </table>
+//           </div> */}
+
+//           {/* Pagination */}
+//           {/* <div className="mt-6 flex items-center justify-between">
+//             <p className="text-sm text-gray-500 dark:text-gray-400">Showing 1 to 5 of 20 results</p>
+//             <div className="flex items-center gap-2"> */}
+//               {/* <PaginationButton disabled>Previous</PaginationButton>
+//               <PaginationButton>Next</PaginationButton> */}
+//             {/* </div>
+//           </div> */}
+//         {/* </div> */}
+//       </div>
+//     </main>
+//   );
+// };
+
+// // Dummy data for buttons
+// const columns = [
+//   { icon: 'summarize', label: 'Report ID', column: 'Report ID', table: 'Report Data', color: '--table-report', colorShadow: '--table-report-shadow', bg: 'bg-white dark:bg-slate-800' },
+//   { icon: 'summarize', label: 'Report Name', column: 'Report Name', table: 'Report Data', color: '--table-report', colorShadow: '--table-report-shadow', bg: 'bg-white dark:bg-slate-800' },
+//   { icon: 'summarize', label: 'Report Date', column: 'Report Date', table: 'Report Data', color: '--table-report', colorShadow: '--table-report-shadow' },
+//   { icon: 'summarize', label: 'Category', column: 'Category', table: 'Report Data', color: '--table-report', colorShadow: '--table-report-shadow' },
+//   { icon: 'menu_book', label: 'Ref Title', column: 'Reference Title', table: 'Reference Data', color: '--table-reference', colorShadow: '--table-reference-shadow' },
+//   { icon: 'menu_book', label: 'Author', column: 'Author', table: 'Reference Data', color: '--table-reference', colorShadow: '--table-reference-shadow' },
+//   { icon: 'menu_book', label: 'Pub Date', column: 'Publication Date', table: 'Reference Data', color: '--table-reference', colorShadow: '--table-reference-shadow' },
+//   { icon: 'menu_book', label: 'Journal', column: 'Journal', table: 'Reference Data', color: '--table-reference', colorShadow: '--table-reference-shadow' },
+//   { icon: 'title', label: 'String ID', column: 'String ID', table: 'String Data', color: '--table-strings', colorShadow: '--table-strings-shadow' },
+//   { icon: 'title', label: 'Content', column: 'String Content', table: 'String Data', color: '--table-strings', colorShadow: '--table-strings-shadow' },
+//   { icon: 'code', label: 'Code Value', column: 'Code Value', table: 'Code Data', color: '--table-codes', colorShadow: '--table-codes-shadow' },
+//   { icon: 'code', label: 'Code Type', column: 'Code Type', table: 'Code Data', color: '--table-codes', colorShadow: '--table-codes-shadow'}]
+
+
+
+Modal.jsx (Without using framer motion)
+
+// import React from 'react';
+
+// export default function Modal({ column, tables, onSelect, onClose }) {
+//   return (
+//     <div
+//       className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50"
+//     >
+//       <div className="bg-white p-6 rounded-lg max-w-md w-full relative">
+//         <button
+//           className="absolute top-2 right-3 text-gray-600 hover:text-gray-900 text-2xl"
+//           onClick={onClose}
+//         >
+//           &times;
+//         </button>
+//         <h2 className="text-xl font-bold mb-4 text-center">
+//           Select Table for '{column.replace('_', ' ')}'
+//         </h2>
+//         <div className="flex flex-col space-y-2">
+//           {tables.map((colObj, idx) => (
+//             <button
+//               key={idx}
+//               className="w-full py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
+//               onClick={() => onSelect(colObj)}
+//             >
+//               {colObj.table.replace(/_Table$/, '').replace('data', ' Data').replace('_', ' ')}
+//             </button>
+//           ))}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+Resultstable.jsx (Without using framer motion)
+
+// import React from 'react';
+
+// export default function ResultsTable({ results }) {
+//   if (!results || results.length === 0) {
+//     return (
+//       <p className="text-center text-gray-500">Search results will appear here.</p>
+//     );
+//   }
+
+//   const headers = Object.keys(results[0]);
+
+//   return (
+//     <div className="overflow-x-auto">
+//       <table className="min-w-full divide-y divide-gray-200 rounded-lg shadow-sm overflow-hidden">
+//         <thead className="bg-gray-200">
+//           <tr>
+//             {headers.map((h, idx) => (
+//               <th
+//                 key={idx}
+//                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+//               >
+//                 {h.replace('_', ' ')}
+//               </th>
+//             ))}
+//           </tr>
+//         </thead>
+//         <tbody className="bg-white divide-y divide-gray-200">
+//           {results.map((row, rIdx) => (
+//             <tr key={rIdx}>
+//               {headers.map((h, cIdx) => (
+//                 <td key={cIdx} className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+//                   {row[h]}
+//                 </td>
+//               ))}
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// }

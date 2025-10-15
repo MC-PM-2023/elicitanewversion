@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import elicitalogo from '../assets/logos/elicitanewversionlogo.gif'
+import datasolvelogo from '../assets/logos/datasolve.png'
 const Header = () => {
   const [user, setUser] = useState(null);
 
@@ -24,22 +25,32 @@ const Header = () => {
             </div>
             <h1 className="text-xl font-extrabold">Elicita New Version</h1>
           </div> */}
-          <div className="flex items-center gap-4">
+          <div className="flex justify-end items-center gap-4">
   {/* <div className="text-primary-600">
     <span className="material-symbols-outlined text-4xl">database</span>
   </div> */}
   <img 
-    src={elicitalogo} 
+    src={datasolvelogo} 
     alt="Elicita New Version" 
-    className="h-[60px]"
+    className="h-[40px]"
    
   />
+  
 </div>
 
           <div className="flex items-center gap-6">
             {/* Conditional rendering based on user data */}
-            {user ? (
-              <div className="flex items-center gap-3">
+        
+          </div>
+    
+      {user ? (
+              <div className="flex items-center  justify-end gap-3">
+                      <img 
+    src={elicitalogo} 
+    alt="Elicita New Version" 
+    className="h-[60px]"
+   
+  /> 
                 {/* Profile Picture */}
                 <div className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-primary-200">
                   <img
@@ -51,12 +62,13 @@ const Header = () => {
                 {/* User Name (if available) */}
                 <span className="text-sm text-primary-600">{user.firstname || "User" }</span>
               </div>
+              
             ) : (
               // Fallback for when user data isn't available
               <div className="text-sm text-gray-500">Not Logged In</div>
             )}
-          </div>
         </div>
+        
       </div>
     </header>
   );

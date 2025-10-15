@@ -45,6 +45,8 @@
 #             pkill -f "serve" || true
 #             nohup npx serve -s dist -l 8080 > app.log 2>&1 &
 #             echo "✅ Vite app deployed successfully!"
+
+
 name: Deploy Elicita New Version to GCP VM
 
 on:
@@ -71,7 +73,7 @@ jobs:
     - name: Debug - List files after build
       run: |
         echo "Contents of elicitafrontend after build:"
-        ls -R elicitafrontend
+        ls -R .
 
     # 4️⃣ Copy project files to GCP VM
     - name: Copy Elicita frontend to GCP Virtual Machine
@@ -80,7 +82,7 @@ jobs:
         host: ${{ secrets.GCP_HOST }}
         username: ${{ secrets.GCP_USERNAME }}
         key: ${{ secrets.GCP_SSH_KEY }}
-        source: "elicitafrontend/**"
+        source: "./*"
         target: "~/app/elicitafrontend"
 
     # 5️⃣ Build and run Docker container on VM

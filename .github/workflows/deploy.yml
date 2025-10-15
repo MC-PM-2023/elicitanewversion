@@ -64,7 +64,6 @@ jobs:
     # 2️⃣ Install dependencies and build
     - name: Install dependencies and build
       run: |
-        cd elicitafrontend
         npm install
         npm run build
 

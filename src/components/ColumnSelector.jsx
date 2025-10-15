@@ -10,7 +10,8 @@ export default function ColumnSelector({
   onSelect,
   openModal,
   selectedColumn,
-  selectedTable
+  selectedTable,
+  colorMap
 }) {
   const columnVariants = {
     hidden: { opacity: 0, y: 10 },
@@ -27,7 +28,7 @@ export default function ColumnSelector({
   };
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mb-8">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 gap-4 mb-1  border border-gray-200 rounded-2xl shadow-md p-4 bg-white mb-4 ">
       {/* Multi-columns that open modal */}
       {Object.keys(multiColumns).map((colName, idx) => (
         <motion.div
@@ -50,6 +51,7 @@ export default function ColumnSelector({
       {columns.map((col, idx) => {
         const isSelected =
           selectedColumn === col.column && selectedTable === col.table;
+          const tableColor=colorMap[col.table] ||"gray"
         return (
           <motion.div
             key={`${col.table}-${col.column}`}
@@ -62,9 +64,12 @@ export default function ColumnSelector({
             onClick={() => onSelect(col.column, col.table)}
             className={`cursor-pointer rounded-xl p-4 flex flex-col items-center justify-center text-center space-y-2 border transition-all ${
               isSelected
-                ? 'bg-purple-100 border-purple-500 text-purple-800 shadow-lg'
-                : 'bg-white border-gray-200 text-gray-600 shadow-md hover:shadow-lg'
+                ? `bg-${tableColor}-200 border-${tableColor}-500 text-${tableColor}-800 shadow-lg`
+                : `bg-white border-${tableColor}-300 text-gray-600 shadow-md hover:shadow-lg`
             }`}
+         
+       
+
           >
             <span className="font-medium text-xs">
               {col.column.replace(/_/g, ' ')}

@@ -35,7 +35,7 @@ const useColumns = () => {
 
         for (let table in tables) {
           const columnsInTable = tables[table];
-          console.log(columnsInTable)
+          // console.log(columnsInTable)
         
           // ✅ Check it's an array or convert if it's an object
           if (Array.isArray(columnsInTable)) {
@@ -70,12 +70,12 @@ const useColumns = () => {
             multi[col.column].push(col);
           }
         });
-console.log("Single columns:",singles)
+// console.log("Single columns:",singles)
         setColumns(singles);
-        console.log("Multiple columns:",multi)
+        // console.log("Multiple columns:",multi)
         setMultiColumns(multi);
       } catch (err) {
-        console.error(err);
+        // console.error(err);
         setError('Failed to fetch columns');
       } finally {
         setLoading(false);

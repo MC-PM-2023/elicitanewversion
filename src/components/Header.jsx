@@ -47,7 +47,7 @@ const Header = () => {
                 </div>
               </>
             ) : (
-              <div className="text-sm text-gray-500">Not Logged in</div>
+              <div className="text-sm text-gray-500">Not Logged In</div>
             )}
 
          

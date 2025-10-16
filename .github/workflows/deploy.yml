@@ -154,8 +154,8 @@ jobs:
     - name: Run frontend container on GCP VM via SSH
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.GCP_VM_HOST }}
-        username: ${{ secrets.GCP_VM_USER }}
+        host: ${{ secrets.GCP_HOST }}
+        username: ${{ secrets.GCP_USERNAME }}
         key: ${{ secrets.GCP_SSH_KEY }}
         script: |
           cd ~/app/elicitafrontend
@@ -164,3 +164,7 @@ jobs:
           docker build -t elicitafrontend .
           docker run -d --name elicitafrontendcontainer -p 80:80 elicitafrontend
             echo "Elicita 2.0  Vite app deployed successfullyy"
+
+
+
+   

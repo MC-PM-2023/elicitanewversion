@@ -41,6 +41,7 @@ export default function ColumnSelector({
           whileTap={{ scale: 0.97 }}
           onClick={() => openModal(colName)}
           className="cursor-pointer bg-white rounded-xl shadow-md p-4 flex flex-col items-center justify-center text-center space-y-2 text-gray-600 border border-gray-200 transition-all hover:shadow-lg text-xs"
+        
         >
           <span className="font-medium">{colName.replace(/_/g, ' ')}</span>
           {/* <span className="text-xs text-purple-500">Select table</span> */}

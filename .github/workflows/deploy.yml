@@ -163,4 +163,4 @@ jobs:
           docker rm elicitafrontendcontainer || true
           docker build -t elicitafrontend .
           docker run -d --name elicitafrontendcontainer -p 80:80 elicitafrontend
-            echo "Elicita 2.0  Vite app deployed successfully"
+            echo "Elicita 2.0  Vite app deployed successfullyy"

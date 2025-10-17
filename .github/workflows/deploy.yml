@@ -158,6 +158,8 @@ jobs:
         username: ${{ secrets.GCP_USERNAME }}
         key: ${{ secrets.GCP_SSH_KEY }}
         script: |
+          docker stop elicitafrontendcontainer || true
+          docker rm elicitafrontendcontainer || true
           cd ~/app/elicitafrontend
           docker stop elicitafrontendcontainer || true
           docker rm elicitafrontendcontainer || true

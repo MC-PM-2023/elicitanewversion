@@ -93,7 +93,7 @@ export default function ForgotPassword() {
     setFrontendError(""); // clear old validation error
 
     // ✅ Call API
-    const success=await handleForgotPassword(email);
+    // const success=await handleForgotPassword(email);
 
     // ✅ Only navigate when successMsg is received
     if (success) {
@@ -102,6 +102,7 @@ export default function ForgotPassword() {
       }, 1000);
     }
   };
+
 
 
 
@@ -116,6 +117,7 @@ export default function ForgotPassword() {
         <h2 className="mt-10 text-center text-2xl font-bold text-white mb-6">
           Forgot Password
         </h2>
+        
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* ✅ Display errors and messages */}

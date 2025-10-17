@@ -31,7 +31,7 @@ const useSearch = () => {
     }
   };
 
-  return { results, loading, error, search };
+  return { results,setResults, loading, error, search };
 };
 
 export default useSearch;

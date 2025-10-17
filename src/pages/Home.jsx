@@ -22,8 +22,9 @@ const colorMap = {
 
 export default function Home() {
   const { columns, multiColumns, loading: loadingColumns, error: columnError } = useColumns();
-  const { results, loading: loadingSearch, error: searchError, search } = useSearch();
+  const { results,setResults, loading: loadingSearch, error: searchError, search } = useSearch();
   const{datas,error,loading,saveAddassignee,success}=useAddAssignee()
+  
 
   let permissions = {};
   try {
@@ -39,8 +40,6 @@ export default function Home() {
     }
   } catch (e) {
     console.error("Failed to parse permissions:", e);
-   
-
     permissions = {};
     console.log("Permissions:", permissions);
   }
@@ -54,12 +53,19 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [modalColumn, setModalColumn] = useState(null);
   const[addModal,setAddModal]=useState(false)
+
   const handleColumnSelect = (column, table) => {
     setSelectedColumn(column);
     setSelectedTable(table);
+    setResults([])
   };
 
+
+
+  
+
   const handleSearch = () => {
+
     search(selectedTable, selectedColumn, searchTerm);
   };
 
@@ -93,122 +99,6 @@ export default function Home() {
           selectedTable={selectedTable}
         />
 
-        {/* <div className="bg-white p-5 mb-8 flex flex-col md:flex-row items-stretch justify-between md:items-center gap-2  border border-gray-200 rounded-xl shadow-md "> 
-          
-          <div className="text-gray-600 text-xs font-medium">
-            {selectedColumn && selectedTable ? (
-              <span
-                className={`bg-${colorMap[selectedTable] || 'gray'}-200 text-${colorMap[selectedTable] || 'gray'}-800 px-3 py-1 rounded-full block text-center md:inline`}
-              >
-                {selectedTable} &gt; {selectedColumn}
-              </span>
-            ) : (
-              <span className="block text-center md:text-left">
-                {/* Waiting for column selection *
-              </span>
-            )}
-          </div>
-
-          <div className="w-full md:w-[300px] relative">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search..."
-              // className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-700"
-              className={`w-full pl-10 pr-4 py-2 rounded-lg border border-2 ${colorMap[selectedTable] ? `border-${colorMap[selectedTable]}-500` : 'border-gray-300'} focus:outline-none focus:ring-0 focus:border-${colorMap[selectedTable] || 'purple'}-500 text-gray-700`}
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-            />
-
-
-      
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute left-3 top-8 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-
-            
-          </div>
-
-    
-
-
-  <button className="flex items-center  justify-end gap-2 bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-medium px-4 py-2 rounded-lg transition-all" onClick={()=>setAddModal(!addModal)}>
-    Add Assignee <CirclePlus size={16}  /> 
-  </button>
-
-
-
-<AnimatePresence>
-  {addModal && (
-    <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      <motion.div
-        className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-4"
-        initial={{ opacity: 0, scale: 0.9, y: -20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: -20 }}
-        transition={{ duration: 0.2, ease: 'easeInOut' }}
-      >
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold text-gray-700">Add Assignee</h2>
-          <button
-            onClick={() => setAddModal(false)}
-            className="text-gray-500 hover:text-gray-700 text-xl"
-          >
-            &times;
-          </button>
-        </div>
-
-        <input
-          type="text"
-          placeholder="Assignee Name"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        />
-        <input
-          type="text"
-          placeholder="Product Category"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        />
-        <input
-          type="text"
-          placeholder="Assignee URL"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        />
-
-        <div className="flex justify-end gap-2 pt-4">
-          <button
-            onClick={() => setAddModal(false)}
-            className="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
-          >
-            Cancel
-          </button>
-          <button className="px-4 py-2 text-sm text-white bg-green-500 rounded-md hover:bg-green-600">
-            Submit
-          </button>
-        </div>
-      </motion.div>
-    </motion.div>
-  )}
-</AnimatePresence>
-
-
-
-
-
-        
-        </div> */}
-
 
 <div className="bg-white p-5 mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 border border-gray-200 rounded-xl shadow-md">
   {/* Left: Label + Search */}
@@ -232,7 +122,7 @@ export default function Home() {
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search..."
+        placeholder={selectedColumn?`Search ${selectedColumn}`:"Search term"}
         className={`w-full pl-10 pr-4 py-2 rounded-lg border-2 ${
           colorMap[selectedTable]
             ? `border-${colorMap[selectedTable]}-500`
@@ -368,7 +258,7 @@ export default function Home() {
 
           </div>
         ) : (
-          <ResultsTable results={results} addModal={addModal} setAddModal={setAddModal} />
+          <ResultsTable results={results} addModal={addModal} setAddModal={setAddModal} selectedColumn={selectedColumn} selectedTable={selectedTable}/>
         )}
 
         {(columnError || searchError) && (
@@ -388,8 +278,128 @@ export default function Home() {
           />
         )}
       </div>
+      {/* <Footer/> */}
       </div>
    
     
   );
 }
+
+
+
+
+      {/* <div className="bg-white p-5 mb-8 flex flex-col md:flex-row items-stretch justify-between md:items-center gap-2  border border-gray-200 rounded-xl shadow-md "> 
+          
+          <div className="text-gray-600 text-xs font-medium">
+            {selectedColumn && selectedTable ? (
+              <span
+                className={`bg-${colorMap[selectedTable] || 'gray'}-200 text-${colorMap[selectedTable] || 'gray'}-800 px-3 py-1 rounded-full block text-center md:inline`}
+              >
+                {selectedTable} &gt; {selectedColumn}
+              </span>
+            ) : (
+              <span className="block text-center md:text-left">
+                {/* Waiting for column selection *
+              </span>
+            )}
+          </div>
+
+          <div className="w-full md:w-[300px] relative">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search..."
+              // className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-700"
+              className={`w-full pl-10 pr-4 py-2 rounded-lg border border-2 ${colorMap[selectedTable] ? `border-${colorMap[selectedTable]}-500` : 'border-gray-300'} focus:outline-none focus:ring-0 focus:border-${colorMap[selectedTable] || 'purple'}-500 text-gray-700`}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+            />
+
+
+      
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute left-3 top-8 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+
+            
+          </div>
+
+    
+
+
+  <button className="flex items-center  justify-end gap-2 bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-medium px-4 py-2 rounded-lg transition-all" onClick={()=>setAddModal(!addModal)}>
+    Add Assignee <CirclePlus size={16}  /> 
+  </button>
+
+
+
+<AnimatePresence>
+  {addModal && (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-4"
+        initial={{ opacity: 0, scale: 0.9, y: -20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: -20 }}
+        transition={{ duration: 0.2, ease: 'easeInOut' }}
+      >
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-semibold text-gray-700">Add Assignee</h2>
+          <button
+            onClick={() => setAddModal(false)}
+            className="text-gray-500 hover:text-gray-700 text-xl"
+          >
+            &times;
+          </button>
+        </div>
+
+        <input
+          type="text"
+          placeholder="Assignee Name"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+        <input
+          type="text"
+          placeholder="Product Category"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+        <input
+          type="text"
+          placeholder="Assignee URL"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+
+        <div className="flex justify-end gap-2 pt-4">
+          <button
+            onClick={() => setAddModal(false)}
+            className="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button className="px-4 py-2 text-sm text-white bg-green-500 rounded-md hover:bg-green-600">
+            Submit
+          </button>
+        </div>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
+
+
+
+
+        
+        </div> */}

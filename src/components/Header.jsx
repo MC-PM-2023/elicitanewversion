@@ -21,23 +21,24 @@ const Header = () => {
 
           {/* Left: Elicita Logo */}
           <div className="flex items-center">
-            <img
-              src={elicitalogo}
-              alt="Elicita New Version"
-              className="h-[50px]"
-            />
-          </div>
-
-          {/* Right: Username, Profile, Datasolve Logo */}
-          <div className="flex items-center gap-4 ml-auto">
           <img
               src={datasolvelogo}
               alt="Datasolve Logo"
               className="h-[40px]"
             />
+          </div>
+
+          {/* Right: Username, Profile, Datasolve Logo */}
+          <div className="flex items-center gap-4 ml-auto">
+         
+             <img
+              src={elicitalogo}
+              alt="Elicita New Version"
+              className="h-[50px]"
+            />
             {user ? (
               <>
-                <span className="text-sm text-primary-600">{user.firstname || "User"}</span>
+               
                 <div className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-primary-200">
                   <img
                     src={user.profilelink || defaultProfilePicture}
@@ -45,6 +46,7 @@ const Header = () => {
                     style={{ width: 40, height: 40, borderRadius: 30 }}
                   />
                 </div>
+                <span className="text-sm text-primary-600">{user.firstname || "User"}</span>
               </>
             ) : (
               <div className="text-sm text-gray-500">Not Logged In</div>

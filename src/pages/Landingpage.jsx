@@ -15,7 +15,7 @@ const Landingpage = () => {
     }
   }, []);
 
- 
+  
 
   return (
     <div>
@@ -56,48 +56,9 @@ const Landingpage = () => {
                 className="rounded-lg"
                
               />
-              {/* <h2 className="text-xl font-semibold text-gray-800">
-                {user ? `${user.firstname} ${user.lastname}` : "Guest User"}
-              </h2>
-              <p className="text-gray-500 text-sm">
-                {user?.role || "Product Manager"}
-              </p> */}
-              {/* <p className="text-gray-600 mt-2">
-                Leading the Elicita upgrade journey.
-              </p> */}
             </div>
           </div>
         </section>
-
-        {/* Features Section */}
-        {/* <section className="w-full bg-white py-20">
-          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
-            {[
-              {
-                title: "Easy to Use",
-                desc: "Our product is user-friendly and designed for all levels of expertise.",
-              },
-              {
-                title: "Fully Customizable",
-                desc: "Tailor the features and settings to match your business needs.",
-              },
-              {
-                title: "Scalable",
-                desc: "As your business grows, our solution grows with you.",
-              },
-            ].map((feature, i) => (
-              <div
-                key={i}
-                className="p-6 bg-gray-50 rounded-lg shadow-lg hover:bg-gray-100"
-              >
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                  {feature.title}
-                </h2>
-                <p className="text-gray-600">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section> */}
 
         {/* Footer Section */}
         <Footer />

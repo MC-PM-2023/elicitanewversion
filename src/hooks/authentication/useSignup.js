@@ -1,35 +1,3 @@
-// import { useState } from "react";
-// import { signupApi } from "../../api/authenticationApi/signupApi";
-
-// export const useSignup=()=>{
-//     const [error,setError]=useState(null);
-//     const [loading,setLoading]=useState(false)
-//     const [data,setData]=useState(null)
-
-//    const saveSignupdetails=async(data)=>{
-//     try{
-//         setLoading(true)
-//         setError(null)
-//         const response=await signupApi(data)
-//         setData(response.data)
-//     }
-//     catch(error){
-//         if(error.response && error.response.data && error.response.data.message){
-//         setError({message:error.response.data.message})
-//         }
-//         else{
-//             setError({message:"Something went wrong"})
-//         }
-//     }
-//     finally{
-//         setLoading(false)
-//     }
-
-//    }
-//    return {error,loading,data,saveSignupdetails}
-// }
-
-
 import { useState } from "react";
 import { signupApi } from "../../api/authenticationApi/signupApi";
 

@@ -14,8 +14,6 @@ import ActivityLogs from './pages/ActivityLogs';
 function App() {
   return (
     <Router>
-  
-
       <main className="min-h-screen">
         <Routes>
 
@@ -29,8 +27,6 @@ function App() {
           <Route path="/activitylogs"  element={<ActivityLogs/>}/>
         </Routes>
       </main>
-     
-
     </Router>
   );
 }

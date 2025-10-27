@@ -1,4 +1,3 @@
-
 import React, { useState,useEffect } from 'react';
 import ColumnSelector from '../components/ColumnSelector';
 import Modal from '../components/Modal';
@@ -42,8 +41,6 @@ useEffect(() => {
   window.addEventListener("scroll", handleScroll);
   return () => window.removeEventListener("scroll", handleScroll);
 }, []);
-
-
 
 
 // Scroll to top of the page
@@ -130,22 +127,26 @@ const scrollToSelectedColumn = () => {
 {showScrollIcons && (
   <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
     {/* Scroll to Top */}
-    {/* <button
+    <button
       onClick={scrollToTop}
       className="bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-full shadow-lg transition-all"
       title="Scroll to top"
     >
       <ArrowUp size={20} />
-    </button> */}
+    </button>
 
     {/* Scroll to Selected Column */}
     {/* <a
       href='#columnselector'
       className="bg-green-600 hover:bg-green-700 text-white p-3 rounded-full shadow-lg transition-all"
       title="Go Back to Column"
+      
     >
      <Columns2 size={20}/>
     </a> */}
+
+
+
   </div>
 )}
 
@@ -194,13 +195,42 @@ const scrollToSelectedColumn = () => {
            if (e.target.value.trim()!=="") setShowError(false)
         }}
       />
+    
        {showError && <span className="inline-block text-red-500 text-center text-xs mt-2">
   {columnError || searchError}
 </span>
 
 
+
 }
 
+
+
+{/* updated */}
+
+
+  {/* Search icon */}
+  {/* <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+    />
+  </svg>
+
+  {/* Count inside input (on right side) 
+  {results.length > 0 && (
+    <span className="absolute right-3 top-1-translate-y-1/2 text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">
+      {results.length}
+    </span>
+  )} */}
 
 
     
@@ -215,7 +245,9 @@ const scrollToSelectedColumn = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
 
+     
     </div>
+   
   </div>
 
   {/* Right: Add Assignee Button */}
@@ -367,120 +399,3 @@ const scrollToSelectedColumn = () => {
 }
 
 
-
-
-      {/* <div className="bg-white p-5 mb-8 flex flex-col md:flex-row items-stretch justify-between md:items-center gap-2  border border-gray-200 rounded-xl shadow-md "> 
-          
-          <div className="text-gray-600 text-xs font-medium">
-            {selectedColumn && selectedTable ? (
-              <span
-                className={`bg-${colorMap[selectedTable] || 'gray'}-200 text-${colorMap[selectedTable] || 'gray'}-800 px-3 py-1 rounded-full block text-center md:inline`}
-              >
-                {selectedTable} &gt; {selectedColumn}
-              </span>
-            ) : (
-              <span className="block text-center md:text-left">
-                {/* Waiting for column selection *
-              </span>
-            )}
-          </div>
-
-          <div className="w-full md:w-[300px] relative">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search..."
-              // className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-700"
-              className={`w-full pl-10 pr-4 py-2 rounded-lg border border-2 ${colorMap[selectedTable] ? `border-${colorMap[selectedTable]}-500` : 'border-gray-300'} focus:outline-none focus:ring-0 focus:border-${colorMap[selectedTable] || 'purple'}-500 text-gray-700`}
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-            />
-
-
-      
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute left-3 top-8 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-
-            
-          </div>
-
-    
-
-
-  <button className="flex items-center  justify-end gap-2 bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-medium px-4 py-2 rounded-lg transition-all" onClick={()=>setAddModal(!addModal)}>
-    Add Assignee <CirclePlus size={16}  /> 
-  </button>
-
-
-
-<AnimatePresence>
-  {addModal && (
-    <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      <motion.div
-        className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-4"
-        initial={{ opacity: 0, scale: 0.9, y: -20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: -20 }}
-        transition={{ duration: 0.2, ease: 'easeInOut' }}
-      >
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold text-gray-700">Add Assignee</h2>
-          <button
-            onClick={() => setAddModal(false)}
-            className="text-gray-500 hover:text-gray-700 text-xl"
-          >
-            &times;
-          </button>
-        </div>
-
-        <input
-          type="text"
-          placeholder="Assignee Name"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        />
-        <input
-          type="text"
-          placeholder="Product Category"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        />
-        <input
-          type="text"
-          placeholder="Assignee URL"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        />
-
-        <div className="flex justify-end gap-2 pt-4">
-          <button
-            onClick={() => setAddModal(false)}
-            className="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
-          >
-            Cancel
-          </button>
-          <button className="px-4 py-2 text-sm text-white bg-green-500 rounded-md hover:bg-green-600">
-            Submit
-          </button>
-        </div>
-      </motion.div>
-    </motion.div>
-  )}
-</AnimatePresence>
-
-
-
-
-
-        
-        </div> */}

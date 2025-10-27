@@ -1082,4 +1082,1523 @@ Resultstable.jsx (Without using framer motion)
 
 
 
+columnselector.jsx
+
+  {/* Single column selectors */}
+   {/* {columns.map((col, idx) => {
+        const isSelected = selectedColumn === col.column && selectedTable === col.table;
+        const related = isRelated(col.table);
+        const baseColor = colorMap[col.table] || '#888';
+
+        return (
+          <motion.button
+            key={`${col.table}-${col.column}`}
+            custom={idx}
+            initial="hidden"
+            animate="visible"
+            variants={columnVariants}
+            onClick={() => onSelect(col.column, col.table)}
+            data-table={col.table}
+            data-column={col.column}
+            className="column-btn flex flex-col items-start text-left p-3 rounded-lg shadow-md transition-all"
+            style={{
+              backgroundColor: isSelected
+                ? baseColor
+                : related
+                ? baseColor + '65' // transparent for related
+                : '#fff',
+              color: isSelected || related ? '#404040' : '#000',
+              
+             
+            }}
+          >
+            <span className=" text-xs  p-2">
+              {col.column.replace(/_/g, ' ')}
+            </span>
+          </motion.button>
+        );
+      })} */}
+
+
+            {/* Multi-columns that open modal */}
+      {/* {Object.keys(multiColumns).map((colName, idx) => (
+        <motion.button
+          key={colName}
+          custom={idx}
+          initial="hidden"
+          animate="visible"
+          variants={columnVariants}
+          onClick={() => openModal(colName)}
+          className="column-btn group flex flex-col items-start text-left p-3 rounded-lg shadow-md transition-all"
+          style={{
+            backgroundColor: '#fff',
+            color: '#00000',
+          }}
+        />
+      ))} */}
+
+{/* {Object.keys(multiColumns).map((colName, idx) => (
+  <motion.button
+    key={colName}
+    custom={idx}
+    initial="hidden"
+    animate="visible"
+    variants={columnVariants}
+    onClick={() => openModal(colName)}
+    className="column-btn group flex flex-col items-start text-left p-3 rounded-lg shadow-md transition-all"
+    style={{
+      backgroundColor: '#fff',
+      color: '#000',
+    }}
+  >
+    <span className="font-semibold text-xs">
+      {colName.replace(/_/g, ' ')}
+    </span>
+  </motion.button>
+))} */}
+
+
+
+
+
+
+// import React from 'react';
+// import { motion } from 'framer-motion';
+
+// export default function ColumnSelector({
+//   columns,
+//   multiColumns,
+//   onSelect,
+//   openModal,
+//   selectedColumn,
+//   selectedTable,
+//   colorMap
+// }) {
+//   const columnVariants = {
+//     hidden: { opacity: 0, y: 10 },
+//     visible: (i) => ({
+//       opacity: 1,
+//       y: 0,
+//       transition: {
+//         delay: i * 0.03,
+//         type: 'spring',
+//         stiffness: 120,
+//         damping: 12
+//       }
+//     })
+//   };
+  
+
+ 
+
+//   return (
+//     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 gap-4 mb-1  border border-gray-200 rounded-2xl shadow-md p-4 bg-white mb-4 ">
+//       {/* Multi-columns that open modal */}
+//       {Object.keys(multiColumns).map((colName, idx) => (
+//         <motion.div
+//           key={colName}
+//           custom={idx}
+//           initial="hidden"
+//           animate="visible"
+//           variants={columnVariants}
+//           whileHover={{ scale: 1.05 }}
+//           whileTap={{ scale: 0.97 }}
+//           onClick={() => openModal(colName)}
+//           className="cursor-pointer bg-white rounded-xl shadow-md p-4 flex flex-col items-center justify-center text-center space-y-2 text-gray-600 border border-gray-200 transition-all hover:shadow-lg text-xs"
+        
+//         >
+//           <span className="font-medium">{colName.replace(/_/g, ' ')}</span>
+//           {/* <span className="text-xs text-purple-500">Select table</span> */}
+//         </motion.div>
+//       ))}
+
+//       {/* Directly selectable columns */}
+//       {columns.map((col, idx) => {
+//         const isSelected =
+//           selectedColumn === col.column && selectedTable === col.table;
+//           const tableColor=colorMap[col.table] ||"gray"
+//         return (
+//           <motion.div
+//             key={`${col.table}-${col.column}`}
+//             custom={idx}
+//             initial="hidden"
+//             animate="visible"
+//             variants={columnVariants}
+//             whileHover={{ scale: 1.05 }}
+//             whileTap={{ scale: 0.97 }}
+//             onClick={() => onSelect(col.column, col.table)}
+//             className={`cursor-pointer rounded-xl p-4 flex flex-col items-center justify-center text-center space-y-2 border transition-all ${
+//               isSelected
+//                 ? `bg-${tableColor}-200 border-${tableColor}-500 text-${tableColor}-800 shadow-lg`
+//                 : `bg-white border-${tableColor}-300 text-gray-600 shadow-md hover:shadow-lg`
+//             }`}
+         
+       
+
+//           >
+//             <span className="font-medium text-xs">
+//               {col.column.replace(/_/g, ' ')}
+//             </span>
+//             {/* <span className="text-xs text-gray-400">{col.table.replace(/_/g, ' ')}</span> */}
+//           </motion.div>
+//         );
+//       })}
+//     </div>
+//   );
+// }
+
+
+// import React, { useEffect } from 'react';
+// import { motion } from 'framer-motion';
+
+// export default function ColumnSelector({
+//   columns,
+//   multiColumns,
+//   onSelect,
+//   openModal,
+//   selectedColumn,
+//   selectedTable,
+ 
+// }) {
+//   const columnVariants = {
+//     hidden: { opacity: 0, y: 10 },
+//     visible: (i) => ({
+//       opacity: 1,
+//       y: 0,
+//       transition: {
+//         delay: i * 0.03,
+//         type: 'spring',
+//         stiffness: 120,
+//         damping: 12
+//       }
+//     })
+//   };
+
+//   // Get color variables from colorMap
+  
+
+
+//   const colorMap = {
+//     'Assignee_Table': '#8e44ad',
+//     'IPC_CPC_Code': '#3f51b5',
+//     'Reference_Table': '#009688',
+//     'Report_Data': '#ffc107',
+//     'Strings': '#cddc39'
+//   };
+  
+//   const getColorVars = (table) => {
+//     const base = colorMap[table] || '#888';
+//     return {
+//       '--color': base,
+//       '--color-shadow': 'rgba(0,0,0,0.2)'
+//     };
+//   };
+  
+
+//   // Merge related styling
+//   const isRelated = (table) => table === selectedTable;
+
+//   return (
+//     <div
+//       className={`column-grid ${
+//         selectedColumn ? 'selection-active' : ''
+//       } grid grid-cols-[repeat(auto-fit,minmax(110px,1fr))] gap-2`}
+//     >
+//       {/* Multi-columns that open modal */}
+//       {Object.keys(multiColumns).map((colName, idx) => (
+//         <motion.button
+//           key={colName}
+//           custom={idx}
+//           initial="hidden"
+//           animate="visible"
+//           variants={columnVariants}
+//           onClick={() => openModal(colName)}
+//           className="column-btn group flex flex-col items-start text-left p-3 rounded-lg bg-white text-black shadow-md"
+//           style={{ '--color': '#666' }}
+//         >
+//           {/* <span className="material-symbols-outlined text-xl mb-2">table_view</span>
+//           <span className="font-semibold text-sm text-foreground-light">
+//           </span> */}
+//         </motion.button>
+//       ))}
+
+//       {/* Single column selectors */}
+//       {columns.map((col, idx) => {
+//         const isSelected = selectedColumn === col.column && selectedTable === col.table;
+//         const related = isRelated(col.table);
+//         const styles = getColorVars(col.table);
+
+//         const iconMap = {
+//           'Report Data': 'summarize',
+//           'Reference Data': 'menu_book',
+//           'String Data': 'title',
+//           'Code Data': 'code',
+//           'Assignee Data': 'person'
+//         };
+
+//         return (
+//           <motion.button
+//             key={`${col.table}-${col.column}`}
+//             custom={idx}
+//             initial="hidden"
+//             animate="visible"
+//             variants={columnVariants}
+//             onClick={() => onSelect(col.column, col.table)}
+//             data-table={col.table}
+//             data-column={col.column}
+//             className={`column-btn group flex flex-col items-start text-left p-3 rounded-lg shadow-md transition-all ${
+//               isSelected ? 'selected' : 'bg-dark'
+//             } ${related ? 'related' : ''}`}
+//             style={styles}
+          
+//           >
+//             {/* <span className="material-symbols-outlined text-xl mb-2">
+//               {iconMap[col.table] || 'table_chart'}
+//             </span> */}
+//             <span
+//               className={`font-semibold text-xs ${
+//                 isSelected ? '' : 'text-foreground-dark '
+            
+//               }`}
+             
+//             >
+//               {col.column.replace(/_/g, ' ')}
+//             </span>
+//           </motion.button>
+//         );
+//       })}
+//     </div>
+//   );
+// }
+
+
+Home.jsx
+
+
+      {/* <div className="bg-white p-5 mb-8 flex flex-col md:flex-row items-stretch justify-between md:items-center gap-2  border border-gray-200 rounded-xl shadow-md "> 
+          
+          <div className="text-gray-600 text-xs font-medium">
+            {selectedColumn && selectedTable ? (
+              <span
+                className={`bg-${colorMap[selectedTable] || 'gray'}-200 text-${colorMap[selectedTable] || 'gray'}-800 px-3 py-1 rounded-full block text-center md:inline`}
+              >
+                {selectedTable} &gt; {selectedColumn}
+              </span>
+            ) : (
+              <span className="block text-center md:text-left">
+                {/* Waiting for column selection *
+              </span>
+            )}
+          </div>
+
+          <div className="w-full md:w-[300px] relative">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search..."
+              // className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-700"
+              className={`w-full pl-10 pr-4 py-2 rounded-lg border border-2 ${colorMap[selectedTable] ? `border-${colorMap[selectedTable]}-500` : 'border-gray-300'} focus:outline-none focus:ring-0 focus:border-${colorMap[selectedTable] || 'purple'}-500 text-gray-700`}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+            />
+
+
+      
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute left-3 top-8 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+
+            
+          </div>
+
+    
+
+
+  <button className="flex items-center  justify-end gap-2 bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-medium px-4 py-2 rounded-lg transition-all" onClick={()=>setAddModal(!addModal)}>
+    Add Assignee <CirclePlus size={16}  /> 
+  </button>
+
+
+
+<AnimatePresence>
+  {addModal && (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-4"
+        initial={{ opacity: 0, scale: 0.9, y: -20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: -20 }}
+        transition={{ duration: 0.2, ease: 'easeInOut' }}
+      >
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-semibold text-gray-700">Add Assignee</h2>
+          <button
+            onClick={() => setAddModal(false)}
+            className="text-gray-500 hover:text-gray-700 text-xl"
+          >
+            &times;
+          </button>
+        </div>
+
+        <input
+          type="text"
+          placeholder="Assignee Name"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+        <input
+          type="text"
+          placeholder="Product Category"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+        <input
+          type="text"
+          placeholder="Assignee URL"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+
+        <div className="flex justify-end gap-2 pt-4">
+          <button
+            onClick={() => setAddModal(false)}
+            className="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button className="px-4 py-2 text-sm text-white bg-green-500 rounded-md hover:bg-green-600">
+            Submit
+          </button>
+        </div>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
+
+
+
+
+        
+        </div> */}
+
+
+Reset password.jsx
+// // src/pages/auth/ResetPassword.jsx
+// import React, { useState } from "react";
+// import { useResetPassword } from "../hooks/authentication/useResetPassword";
+// export default function ResetPassword() {
+//   const [formData, setFormData] = useState({
+//     email: "",
+//     otp: "",
+//     newpassword: "",
+//   });
+
+//   const { loading, successMsg, errorMsg, handleResetPassword } =
+//     useResetPassword();
+
+//   const handleChange = (e) => {
+//     setFormData({ ...formData, [e.target.name]: e.target.value });
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     handleResetPassword(formData);
+//   };
+
+//   return (
+//     <div className="flex min-h-screen flex-col justify-center px-6 py-12 bg-gray-900">
+//       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+//       <img
+//           alt="Your Company"
+//           src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+//           className="mx-auto h-10 w-auto"
+//         />
+//         <h2 className="mt-10 text-center text-2xl font-bold text-white mb-6">
+//           Reset Password
+//         </h2>
+
+//         <form onSubmit={handleSubmit} className="space-y-5">
+//           {errorMsg && <p className="text-red-500 text-center">{errorMsg}</p>}
+//           {successMsg && (
+//             <p className="text-green-500 text-center">{successMsg}</p>
+//           )}
+
+//           <div>
+//             <label className="block text-sm font-medium text-gray-100 mb-1">
+//               Email Address
+//             </label>
+//             <input
+//               type="email"
+//               name="email"
+//               placeholder="Enter your email"
+//               value={formData.email}
+//               onChange={handleChange}
+//               className="block w-full rounded-md bg-white/5 px-3 py-2 text-base text-white placeholder-gray-400 focus:outline-2 focus:outline-indigo-500"
+//               required
+//             />
+//           </div>
+
+//           <div>
+//             <label className="block text-sm font-medium text-gray-100 mb-1">
+//               OTP
+//             </label>
+//             <input
+//               type="text"
+//               name="otp"
+//               placeholder="Enter OTP"
+//               value={formData.otp}
+//               onChange={handleChange}
+//               className="block w-full rounded-md bg-white/5 px-3 py-2 text-base text-white placeholder-gray-400 focus:outline-2 focus:outline-indigo-500"
+//               required
+//             />
+//           </div>
+
+//           <div>
+//             <label className="block text-sm font-medium text-gray-100 mb-1">
+//               New Password
+//             </label>
+//             <input
+//               type="password"
+//               name="newpassword"
+//               placeholder="Enter new password"
+//               value={formData.newpassword}
+//               onChange={handleChange}
+//               className="block w-full rounded-md bg-white/5 px-3 py-2 text-base text-white placeholder-gray-400 focus:outline-2 focus:outline-indigo-500"
+//               required
+//             />
+//           </div>
+
+//           <button
+//             type="submit"
+//             disabled={loading}
+//             className={`w-full py-2 rounded-md text-white font-medium transition ${
+//               loading
+//                 ? "bg-gray-500 cursor-not-allowed"
+//                 : "bg-indigo-500 hover:bg-indigo-400"
+//             }`}
+//           >
+//             {loading ? "Resetting..." : "Reset Password"}
+//           </button>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+Resulttable.jsx
+// import React, { useState, useMemo ,useEffect} from "react";
+// import { motion } from "framer-motion";
+// import { Eye, EyeOff } from "lucide-react";
+
+// const cardVariants = {
+//   hidden: { opacity: 0, y: 10 },
+//   visible: (i) => ({
+//     opacity: 1,
+//     y: 0,
+//     transition: { delay: i * 0.1 },
+//   }),
+// };
+
+
+// // Map of table -> columns to show as cards
+// const CARD_COLUMNS = {
+//   Reference_Table: ["Relevant_Excerpts", "Reference_No","Observation","Rating_of_Reference","Project_Title","Docket","Project_Code,id"], // add columns you want
+//   Report_Data: ["Understanding", "Key_Feature", "Overall_Rating","Project_Title","Docket","Project_Code","id"],
+// };
+
+
+
+
+// export default function ResultsTable({ results, selectedColumn,selectedTable }) {
+//   const [showViewDetails, setShowViewDetails] = useState(false);
+//   console.log("Result is:",results)
+
+//  useEffect(()=>{
+// setShowViewDetails(true)
+//  },[selectedColumn])
+
+//   // ✅ Memoize results content for faster UI response
+//   const renderedResults = useMemo(() => {
+//     if (!results || results.length === 0) {
+//       return (
+//         <motion.p
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           className="text-center text-gray-500 text-xs mt-10"
+//         >
+//           Search results will appear here.
+//         </motion.p>
+//       );
+//     }
+
+//     // ✅ CASE 1: Show cards for "Relevant_Excerpts"
+   
+//     if (selectedColumn === "Relevant_Excerpts") {
+//       return (
+//         <motion.div className="space-y-3" initial="hidden" animate="visible">
+//           <span className="inline-flex items-center rounded-md bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-indigo-300">
+//             Results
+//             <span className="inline-flex items-center justify-center w-5 h-5 ms-2 text-[12px] font-semibold text-indigo-700 rounded-full">
+//               {results.length || 0}
+//             </span>
+//           </span>
+
+//           {results.map((item, idx) => (
+//             <motion.div
+//               key={idx}
+//               custom={idx}
+//               variants={cardVariants}
+//               className="bg-white rounded-xl shadow-md p-5 border border-gray-100 hover:shadow-lg transition-shadow"
+//             >
+//               {Object.entries(item).map(([key, value]) => {
+//                 const stringValue =
+//                   value !== null && value !== "" ? value.toString() : "—";
+//                 const displayValue =
+//                   !showViewDetails && stringValue.length > 500
+//                     ? `${stringValue.slice(0, 500)}...`
+//                     : stringValue;
+
+//                 return (
+//                   <div key={key} className="mb-3">
+//                     <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">
+//                       {key.replace(/_/g, " ")}
+//                     </p>
+                  
+//                     <p
+//                       className="text-sm font-semibold text-gray-800 text-justify"
+//                       title={stringValue}
+//                     >
+//                       {displayValue}
+//                     </p>
+//                   </div>
+//                 );
+//               })}
+
+//               <div className="mt-4 text-right flex justify-end gap-2">
+//                 <button
+//                   className="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all"
+//                   onClick={() => setShowViewDetails(!showViewDetails)}
+//                 >
+//                   {showViewDetails ? <EyeOff /> : <Eye />}
+//                 </button>
+//               </div>
+//             </motion.div>
+//           ))}
+//         </motion.div>
+//       );
+//     }
+
+//     // ✅ CASE 2: Show table for other columns
+//     return (
+//       <div>
+//            <span className="inline-flex items-center rounded-md bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-indigo-300">
+//             Results
+//             <span className="inline-flex items-center justify-center w-5 h-5 ms-2 text-[12px] font-semibold text-indigo-700 ">
+//               {results.length || 0}
+//             </span>
+//           </span>
+     
+//       <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-md mt-4">
+//         <table className="min-w-full text-sm text-gray-700">
+//           <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
+//             <tr>
+//               {Object.keys(results[0]).map((header) => (
+//                 <th key={header} className="px-4 py-2 text-left">
+//                   {header.replace(/_/g, " ")}
+//                 </th>
+//               ))}
+             
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {results.map((row, rowIndex) => (
+//               <tr key={rowIndex} className="border-b hover:bg-gray-50">
+//                 {Object.values(row).map((value, colIndex) => (
+//                   <td
+//                     key={colIndex}
+//                     className="px-4 py-2 text-gray-800 text-xs break-words"
+//                   >
+//                     {value !== null && value !== "" ? value.toString() : "—"}
+//                   </td>
+//                 ))}
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+//       </div>
+//     );
+//   }, [results, selectedColumn,selectedTable ,showViewDetails]); // Only re-render when data or column changes
+
+//   // ✅ Return memoized JSX
+//   return renderedResults;
+// }
+
+//corrected code for selected table show cards,tables
+
+// import React, { useState, useMemo, useEffect } from "react";
+// import { motion } from "framer-motion";
+// import { Eye, EyeOff } from "lucide-react";
+
+// const cardVariants = {
+//   hidden: { opacity: 0, y: 10 },
+//   visible: (i) => ({
+//     opacity: 1,
+//     y: 0,
+//     transition: { delay: i * 0.1 },
+//   }),
+// };
+
+// // Map of table -> columns to show as cards
+// const CARD_COLUMNS = {
+//   Reference_Table: ["Relevant_Excerpts", "Reference_No","Observation","Rating_of_Reference","Project_Title","Docket","Project_Code","id"],
+//   Report_Data: ["Understanding", "Key_Feature", "Overall_Rating","Project_Title","Docket","Project_Code","id"],
+// };
+
+
+// export default function ResultsTable({ results, selectedColumn, selectedTable }) {
+//   const [showViewDetails, setShowViewDetails] = useState(false);
+
+//   useEffect(() => {
+//     setShowViewDetails(true);
+//   }, [selectedColumn]);
+
+//   const renderedResults = useMemo(() => {
+//     if (!results || results.length === 0) {
+//       return (
+//         <motion.p
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           className="text-center text-gray-500 text-xs mt-10"
+//         >
+//           Search results will appear here.
+//         </motion.p>
+//       );
+//     }
+  
+
+//     // ✅ CASE: Show cards for tables in CARD_COLUMNS
+//     if (CARD_COLUMNS[selectedTable]) {
+//       const columnsToShow = CARD_COLUMNS[selectedTable];
+//       return (
+//         <motion.div className="space-y-3" initial="hidden" animate="visible">
+//           <span className="inline-flex items-center rounded-md bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-indigo-300">
+//             Results
+//             <span className="inline-flex items-center justify-center w-5 h-5 ms-2 text-[12px] font-semibold text-indigo-700 rounded-full">
+//               {results.length || 0}
+//             </span>
+//           </span>
+//           {results.map((item, idx) => (
+//             <motion.div
+//               key={idx}
+//               custom={idx}
+//               variants={cardVariants}
+//               className="bg-white rounded-xl shadow-md p-5 border border-gray-100 hover:shadow-lg transition-shadow"
+//             >
+//               {columnsToShow.map((key) => {
+//                 const value = item[key];
+//                 const stringValue = value !== null && value !== "" ? value.toString() : "—";
+//                 const displayValue =
+//                   !showViewDetails && stringValue.length > 500
+//                     ? `${stringValue.slice(0, 500)}...`
+//                     : stringValue;
+
+//                 return (
+//                   <div key={key} className="mb-3">
+//                     <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">
+//                       {key.replace(/_/g, " ")}
+//                     </p>
+//                     <p
+//                       className="text-sm font-semibold text-gray-800 text-justify"
+//                       title={stringValue}
+//                     >
+//                       {displayValue}
+//                     </p>
+//                   </div>
+
+
+//                 );
+//               })}
+
+//               <div className="mt-4 text-right flex justify-end gap-2">
+//                 <button
+//                   className="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all"
+//                   onClick={() => setShowViewDetails(!showViewDetails)}
+//                 >
+//                   {showViewDetails ? <EyeOff /> : <Eye />}
+//                 </button>
+//               </div>
+//             </motion.div>
+//           ))}
+//         </motion.div>
+//       );
+//     }
+
+//     // ✅ CASE: Show table for other tables
+//     return (
+//       <div>
+//         <span className="inline-flex items-center rounded-md bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-indigo-300">
+//           Results
+//           <span className="inline-flex items-center justify-center w-5 h-5 ms-2 text-[12px] font-semibold text-indigo-700 ">
+//             {results.length || 0}
+//           </span>
+//         </span>
+
+//         <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-md mt-4">
+//           <table className="min-w-full text-sm text-gray-700">
+//             <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
+//               <tr>
+//                 {Object.keys(results[0]).map((header) => (
+//                   <th key={header} className="px-4 py-2 text-left">
+//                     {header.replace(/_/g, " ")}
+//                   </th>
+//                 ))}
+//               </tr>
+//             </thead>
+//             <tbody>
+//                 {results.map((row, rowIndex) => (
+//                 <tr key={rowIndex} className="border-b hover:bg-gray-50">
+//                   {Object.values(row).map((value, colIndex) => (
+//                     <td
+//                       key={colIndex}
+//                       className="px-4 py-2 text-gray-800 text-xs break-words"
+//                     >
+//                       {value !== null && value !== "" ? value.toString() : "—"}
+//                     </td>
+//                   ))}
+//                 </tr>
+//               ))}    
+//             </tbody>
+//           </table>
+//         </div>
+//       </div>
+//     );
+//   }, [results, selectedColumn, selectedTable, showViewDetails]);
+
+//   return renderedResults;
+// }
+
+
+
+
+
+
+
+
+//added performance hooks
+
+
+// import React, { useState, useMemo, useEffect, useCallback } from "react";
+// import { motion } from "framer-motion";
+// import { Eye, EyeOff } from "lucide-react";
+
+// const cardVariants = {
+//   hidden: { opacity: 0, y: 10 },
+//   visible: (i) => ({
+//     opacity: 1,
+//     y: 0,
+//     transition: { delay: i * 0.1 },
+//   }),
+// };
+
+// const CARD_COLUMNS = {
+//   Reference_Table: [
+   
+//     "Project_Code",
+//     "Docket",
+//     "Project_Title",
+//     "Reference_No",
+//     "Rating_of_Reference",
+//     "Observation", 
+//     "Relevant_Excerpts",
+//   ],
+//   Report_Data: [
+//     "id",
+//     "Project_Code",
+//     "Docket",
+//     "Project_Title",
+//     "Understanding",
+//     "Key_Feature",
+//     "Overall_Rating",
+//   ],
+// };
+
+// export default function ResultsTable({ results, selectedColumn, selectedTable ,searchTerm}) {
+//   const [showViewDetails, setShowViewDetails] = useState(false);
+
+//   const MAX_RESULTS = 50;
+// const limitedResults = useMemo(() => results.slice(0, MAX_RESULTS), [results]);
+
+//   useEffect(() => {
+//     setShowViewDetails(true);
+//   }, [selectedColumn]);
+
+//   const columnsToShow = useMemo(
+//     () => CARD_COLUMNS[selectedTable] || [],
+//     [selectedTable]
+//   );
+
+//   const toggleViewDetails = useCallback(() => {
+//     setShowViewDetails((prev) => !prev);
+//   }, []);
+
+
+
+//   // highlight matches
+// const highlightMatch = (text, keyword) => {
+//   if (!keyword?.trim()) return text;
+
+//   const regex = new RegExp(`(${keyword})`, "gi");
+//   console.log(regex)
+//   const parts = text.split(regex);
+
+//   return parts.map((part, index) =>
+//     regex.test(part) ? (
+//       <mark key={index} className="bg-yellow-200 text-black font-semibold">
+//         {part}
+//       </mark>
+//     ) : (
+//       part
+//     )
+//   );
+// };
+
+
+//   const renderedResults = useMemo(() => {
+//     if (!results || results.length === 0) {
+//       return (
+//         <motion.p
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           className="text-center text-gray-500 text-xs mt-10"
+//         >
+//           Search results will appear here.
+//         </motion.p>
+//       );
+//     }
+
+//     // ✅ CASE: Show cards for defined tables
+//     if (CARD_COLUMNS[selectedTable]) {
+//       return (
+//         <motion.div className="space-y-3" initial="hidden" animate="visible">
+//           <span className="inline-flex items-center rounded-md bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-indigo-300">
+//             Results
+//             <span className="inline-flex items-center justify-center w-5 h-5 ms-2 text-[12px] font-semibold text-indigo-700 rounded-full">
+//               {results.length || 0}
+//             </span>
+//           </span>
+
+//           {limitedResults.map((item, idx) => (
+//             <motion.div
+//               key={idx}
+//               custom={idx}
+//               variants={cardVariants}
+//               className="bg-white rounded-xl shadow-md p-5 border border-gray-100 hover:shadow-lg transition-shadow"
+//             >
+//               {columnsToShow.map((key) => {
+                
+//                 const value = item[key];
+//                 const stringValue = value !== null && value !== "" ? value.toString() : "—";
+//                 const displayValue =
+//                   !showViewDetails && stringValue.length > 500
+//                     ? `${stringValue.slice(0, 500)}...`
+//                     : stringValue;           
+
+//                 return (
+//                   <div key={key} className="mb-3">
+//                     <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">
+//                       {key.replace(/_/g, " ")}
+//                     </p>
+//                     <p
+//                       className="text-sm font-semibold text-gray-800 text-justify"
+//                       title={stringValue}
+//                     >
+//                       {highlightMatch(displayValue,searchTerm)}
+//                     </p>
+//                   </div>
+//                 );
+//               })}
+//               <div className="mt-4 text-right flex justify-end gap-2">
+//                 <button
+//                   className="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all"
+//                   onClick={toggleViewDetails}
+//                 >
+//                   {showViewDetails ? <EyeOff /> : <Eye />}
+//                 </button>
+//               </div>
+//             </motion.div>
+//           ))}
+//         </motion.div>
+//       );
+//     }
+
+//     // ✅ CASE: Show table for other tables
+//     return (
+//       <div>
+//         <span className="inline-flex items-center rounded-md bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-indigo-300">
+//           Results
+//           <span className="inline-flex items-center justify-center w-5 h-5 ms-2 text-[12px] font-semibold text-indigo-700">
+//             {results.length || 0}
+//           </span>
+//         </span>
+
+//         <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-md mt-4">
+//           <table className="min-w-full text-sm text-gray-700">
+//             <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
+//               <tr>
+//                 {Object.keys(results[0]).map((header) => (
+//                   <th key={header} className="px-4 py-2 text-left">
+//                     {header.replace(/_/g, " ")}
+//                   </th>
+//                 ))}
+//               </tr>
+//             </thead>  
+//             <tbody>
+//               {results.map((row, rowIndex) => (
+//                 <tr key={rowIndex} className="border-b hover:bg-gray-50">
+//                   {Object.values(row).map((value, colIndex) => (
+//                     <td
+//                       key={colIndex}
+//                       className="px-4 py-2 text-gray-800 text-xs break-words"
+//                     >
+//                       {/* {value !== null && value !== "" ? value.toString() : "—"} */}
+//                       {/* {value !== null && value !== "" ? highlightMatch( value.toString() ,searchTerm): "—"} */}
+//                      {value!==null && value!==""? highlightMatch(value.toString(),searchTerm):"-"}
+//                     </td>
+//                   ))}
+//                 </tr>
+//               ))}
+//             </tbody>
+//           </table>
+//         </div>
+       
+//       </div>
+//     );
+//   }, [results, selectedColumn, selectedTable, showViewDetails, columnsToShow, toggleViewDetails]);
+
+//   return renderedResults;
+// }
+
+
+
+//last corrected code
+// import React, { useState, useMemo, useEffect, useCallback } from "react";
+// import { motion } from "framer-motion";
+// import {Link} from 'react-router-dom';
+// import { Eye, EyeOff } from "lucide-react";
+
+// const cardVariants = {
+//   hidden: { opacity: 0, y: 10 },
+//   visible: (i) => ({
+//     opacity: 1,
+//     y: 0,
+//     transition: { delay: i * 0.1 },
+//   }),
+// };
+
+// // ✅ Card layout tables
+// const CARD_COLUMNS = {
+//   Reference_Table: [
+//     "Project_Code",
+//     "Docket",
+//     "Project_Title",
+//     "Reference_No",
+//     "Rating_of_Reference",
+//     "Observation",
+//     "Relevant_Excerpts",
+//   ],
+//   Report_Data: [
+//     "Project_Code",
+//     "Docket",
+//     "Project_Title",
+//     "Understanding",
+//     "Key_Feature",
+//     "Overall_Rating",
+//   ],
+// };
+
+// // ✅ Strict order for table layout
+// const ORDER_FOR_TABLES = {
+//   Strings: ["Project_Code", "Docket", "Strings", "Strings_Hits"],
+//   IPC_CPC_Code: [
+//     "Project_Code",
+//     "Product_Category",
+//     "IPC_CPC",
+//     "Definition",
+//     "Type",
+//   ],
+//   Assignee_Table: ["Assignee_Name", "Product_Category", "Assignee_URL"],
+// };
+
+
+// export default function ResultsTable({
+//   results,
+//   selectedColumn,
+//   selectedTable,
+//   searchTerm,
+// }) {
+//   const [showViewDetails, setShowViewDetails] = useState(false);
+
+//   const MAX_RESULTS = 50;
+
+//   // const limitedResults = useMemo(() => {
+//   //   if (!results) return [];
+//   //   return results.slice(0, MAX_RESULTS);
+//   // }, [results]);
+//   const limitedResults = useMemo(() => results || [], [results]);
+
+
+//   useEffect(() => {
+//     setShowViewDetails(true);
+//   }, [selectedColumn]);
+
+//   const columnsToShow = useMemo(() => {
+//     if (CARD_COLUMNS[selectedTable]) return CARD_COLUMNS[selectedTable];
+//     if (ORDER_FOR_TABLES[selectedTable]) return ORDER_FOR_TABLES[selectedTable];
+//     return Object.keys(results?.[0] || {});
+//   }, [selectedTable, results]);
+
+//   const toggleViewDetails = useCallback(() => {
+//     setShowViewDetails((prev) => !prev);
+//   }, []);
+
+//   // ✅ Highlight matching text
+//   const highlightMatch = (text, keyword) => {
+//     if (!keyword?.trim()) return text;
+//     const regex = new RegExp(`(${keyword})`, "gi");
+//     const parts = text.split(regex);
+//     return parts.map((part, index) =>
+//       regex.test(part) ? (
+//         <mark key={index} className="bg-yellow-200 text-black font-semibold">
+//           {part}
+//         </mark>
+//       ) : (
+//         part
+//       )
+//     );
+//   };
+
+//   const renderedResults = useMemo(() => {
+//     if (!results || results.length === 0) {
+//       return (
+//         <motion.p
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           className="text-center text-gray-500 text-xs mt-10"
+//         >
+//           Search results will appear here.
+//         </motion.p>
+//       );
+//     }
+
+//     // ✅ Show card layout only for CARD_COLUMNS tables
+//     if (CARD_COLUMNS[selectedTable]) {
+//       return (
+//         <motion.div className="space-y-3" initial="hidden" animate="visible">
+//           <span className="inline-flex items-center rounded-md bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-indigo-300">
+//             Results
+//             <span className="inline-flex items-center justify-center w-5 h-5 ms-2 text-[12px] font-semibold text-indigo-700 rounded-full">
+//               {results.length || 0}
+//             </span>
+//           </span>
+
+//           {limitedResults.map((item, idx) => (
+//             <motion.div
+//               key={idx}
+//               custom={idx}
+//               variants={cardVariants}
+//               className="bg-white rounded-xl shadow-md p-5 border border-gray-100 hover:shadow-lg transition-shadow"
+//             >
+//               {/* {columnsToShow.map((key) => {
+//                 if (key.toLowerCase() === "id") return null;
+
+//                 const value = item[key];
+//                 const stringValue =
+//                   value !== null && value !== "" ? value.toString() : "—";
+//                 const displayValue =
+//                   !showViewDetails && stringValue.length > 500
+//                     ? `${stringValue.slice(0, 500)}...`
+//                     : stringValue;
+
+//                 return (
+//                   <div key={key} className="mb-3">
+//                     <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">
+//                       {key.replace(/_/g, " ")}
+//                     </p>
+//                     <p
+//                       className="text-sm font-semibold text-gray-800 text-justify"
+//                       title={stringValue}
+//                     >
+//                       {highlightMatch(displayValue, searchTerm)}
+//                     </p>
+//                   </div>
+//                 );
+//               })} */}
+//               {columnsToShow.map((key) => {
+//   if (key.toLowerCase() === "id") return null;
+
+//   const value = item[key];
+//   const stringValue =
+//     value !== null && value !== "" ? value.toString() : "—";
+
+//   // ✅ Special handling for Reference_No
+//   const displayValue =
+//     key === "Reference_No" && value
+//       ? typeof value === "string"
+//         ? value.split("/").pop() // show only the last part of URL
+//         : value.name || "—"
+//       : !showViewDetails && stringValue.length > 500
+//       ? `${stringValue.slice(0, 500)}...`
+//       : stringValue;
+
+//   return (
+//     <div key={key} className="mb-3">
+//       <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">
+//         {key.replace(/_/g, " ")}
+//       </p>
+//       <p className="text-sm font-semibold text-gray-800 text-justify" title={stringValue}>
+//         {key === "Reference_No" && value ? (
+//           <a
+//             href={typeof value === "string" ? value : value.url}
+//             target="_blank"
+//             rel="noopener noreferrer"
+//             className="text-blue-600 hover:underline"
+//           >
+//             {displayValue}
+//           </a>
+//         ) : (
+//           highlightMatch(displayValue, searchTerm)
+//         )}
+//       </p>
+//     </div>
+//   );
+// })}
+
+
+//               <div className="mt-4 text-right flex justify-end gap-2">
+//                 <button
+//                   className="bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all"
+//                   onClick={toggleViewDetails}
+//                 >
+//                   {showViewDetails ? <EyeOff /> : <Eye />}
+//                 </button>
+//               </div>
+//             </motion.div>
+//           ))}
+//         </motion.div>
+//       );
+//     }
+
+//     // ✅ Otherwise, show TABLE layout (ORDER_FOR_TABLES)
+//     return (
+//       <div>
+//         <span className="inline-flex items-center rounded-md bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-indigo-300">
+//           Results
+//           <span className="inline-flex items-center justify-center w-5 h-5 ms-2 text-[12px] font-semibold text-indigo-700">
+//             {results.length || 0}
+//           </span>
+//         </span>
+
+//         <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-md mt-4">
+//           <table className="min-w-full text-sm text-gray-700">
+//             <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
+//               <tr>
+//                 {columnsToShow
+//                   .filter((col) => col.toLowerCase() !== "id")
+//                   .map((header) => (
+//                     <th key={header} className="px-4 py-2 text-left">
+//                       {header.replace(/_/g, " ")}
+//                     </th>
+//                   ))}
+//               </tr>
+//             </thead>
+//             <tbody>
+//               {limitedResults.map((row, rowIndex) => (
+//                 <tr key={rowIndex} className="border-b hover:bg-gray-50">
+//                   {columnsToShow
+//                     .filter((col) => col.toLowerCase() !== "id")
+//                     .map((col, colIndex) => (
+//                       <td
+//                         key={colIndex}
+//                         className="px-4 py-2 text-gray-800 text-xs break-words"
+//                       >
+//                         {row[col] !== null && row[col] !== ""
+//                           ? highlightMatch(row[col].toString(), searchTerm)
+//                           : "—"}
+//                       </td>
+//                     ))}
+//                 </tr>
+//               ))}
+//             </tbody>
+//           </table>
+//         </div>
+//       </div>
+//     );
+//   }, [
+//     results,
+//     selectedColumn,
+//     selectedTable,
+//     showViewDetails,
+//     columnsToShow,
+//     toggleViewDetails,
+//   ]);
+
+//   return renderedResults;
+// }
+
+
+Forgotpassword.jsx
+
+// // src/pages/auth/ForgotPassword.jsx
+// import React,{ useState } from "react";
+// import { useForgotPassword } from "../hooks/authentication/useForgotPassword";
+// import { useNavigate } from "react-router-dom";
+
+// export default function ForgotPassword() {
+//   const [email, setEmail] = useState("");
+//   const { loading, successMsg, errorMsg, handleForgotPassword } =
+//     useForgotPassword();
+//   const navigate = useNavigate();
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     await handleForgotPassword(email);
+
+//     // If successful, navigate to resetpassword with email
+//     if (successMsg || !errorMsg) {
+//       setTimeout(() => {
+//         navigate("/resetpassword", { state: { email } });
+//       }, 1000);
+//     }
+//   };
+
+//   return (
+//     <div className="flex min-h-screen flex-col justify-center px-6 py-12 bg-gray-900">
+//       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+//       <img
+//           alt="Your Company"
+//           src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+//           className="mx-auto h-10 w-auto"
+//         />
+//         <h2 className="mt-10 text-center text-2xl font-bold text-white mb-6">
+//           Forgot Password
+//         </h2>
+
+//         <form onSubmit={handleSubmit} className="space-y-5">
+//           {errorMsg && <p className="text-red-500 text-center">{errorMsg}</p>}
+//           {successMsg && (
+//             <p className="text-green-500 text-center">{successMsg}</p>
+//           )}
+
+//           <div>
+//             <label className="block text-sm font-medium text-gray-100 mb-1">
+//               Email Address
+//             </label>
+//             <input
+//               type="email"
+//               placeholder="Enter your email"
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//             className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:outline-indigo-500 sm:text-sm" />
+//           </div>
+
+//           <button
+//             type="submit"
+//             disabled={loading}
+//             className={`flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold text-white  hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 ${
+//               loading
+//                 ? "bg-gray-500 cursor-not-allowed"
+//                 : "bg-indigo-500 hover:bg-indigo-400"
+//             }`}
+//           >
+//             {loading ? "Sending OTP..." : "Send OTP"}
+//           </button>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+useSignup.js
+// import { useState } from "react";
+// import { signupApi } from "../../api/authenticationApi/signupApi";
+
+// export const useSignup=()=>{
+//     const [error,setError]=useState(null);
+//     const [loading,setLoading]=useState(false)
+//     const [data,setData]=useState(null)
+
+//    const saveSignupdetails=async(data)=>{
+//     try{
+//         setLoading(true)
+//         setError(null)
+//         const response=await signupApi(data)
+//         setData(response.data)
+//     }
+//     catch(error){
+//         if(error.response && error.response.data && error.response.data.message){
+//         setError({message:error.response.data.message})
+//         }
+//         else{
+//             setError({message:"Something went wrong"})
+//         }
+//     }
+//     finally{
+//         setLoading(false)
+//     }
+
+//    }
+//    return {error,loading,data,saveSignupdetails}
+// }
+
+Modal.jsx
+
+
+// import React from 'react';
+// import { motion, AnimatePresence } from 'framer-motion';
+
+// export default function Modal({ column, tables, onSelect, onClose }) {
+//   return (
+//     <AnimatePresence>
+//       <motion.div
+//         className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+//         initial={{ opacity: 0 }}
+//         animate={{ opacity: 1 }}
+//         exit={{ opacity: 0 }}
+//       >
+//         <motion.div
+//           className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 relative"
+//           initial={{ y: 40, opacity: 0 }}
+//           animate={{ y: 0, opacity: 1 }}
+//           exit={{ y: 40, opacity: 0 }}
+//           transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+//         >
+//           {/* Close Button */}
+//           <button
+//             className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"
+//             onClick={onClose}
+//             aria-label="Close"
+//           >
+//             <svg
+//               xmlns="http://www.w3.org/2000/svg"
+//               className="h-6 w-6"
+//               fill="none"
+//               viewBox="0 0 24 24"
+//               stroke="currentColor"
+//             >
+//               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+//             </svg>
+//           </button>
+
+//           {/* Modal Title */}
+//           <h2 className="text-sm font-semibold text-gray-800 text-center mb-6 ">
+//             Select Table for <span className="font-mono text-purple-600 text-xl">'{column.replace(/_/g, ' ')}'</span>
+//           </h2>
+
+//           {/* Table Options */}
+//           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+//             {tables.map((colObj, idx) => (
+//               <button
+//                 key={idx}
+//                 className="w-full text-left px-4 py-3 rounded-lg border border-gray-200 hover:border-purple-500 hover:bg-purple-50 transition-colors text-gray-800 font-medium text-xs"
+//                 onClick={() => onSelect(colObj)}
+//               >
+//                 {colObj.table
+//                   .replace(/_Table$/, '')
+//                   .replace('data', ' Data')
+//                   .replace(/_/g, ' ')}
+//               </button>
+//             ))}
+//           </div>
+//         </motion.div>
+//       </motion.div>
+//     </AnimatePresence>
+//   );
+// }
+
+
+Header.jsx
+// import React, { useState, useEffect } from 'react';
+// import elicitalogo from '../assets/logos/elicitanewversionlogo.gif';
+// import datasolvelogo from '../assets/logos/datasolve.png';
+
+// const Header = () => {
+//   const [user, setUser] = useState(null);
+
+//   useEffect(() => {
+//     const userFromLocalStorage = localStorage.getItem("user");
+//     if (userFromLocalStorage) {
+//       setUser(JSON.parse(userFromLocalStorage));
+//     }
+//   }, []);
+
+//   const defaultProfilePicture = "https://via.placeholder.com/40";
+
+//   return (
+//     <header className="border-b border-border-light dark:border-border-dark bg-white/80 dark:bg-background-dark/80 backdrop-blur-sm sticky top-0 z-30">
+//       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+//         <div className="flex flex-col sm:flex-row items-center justify-between h-auto sm:h-16 w-full gap-3 sm:gap-0 py-3 sm:py-0">
+
+//           {/* Left: Elicita Logo */}
+//           <div className="flex items-center sm:justify-start flex-shrink-0">
+//           <img
+//               src={datasolvelogo}
+//               alt="Datasolve Logo"
+//               className="h-[40px] sm:h-10 md:h-10 lg:h-10"
+//               loading='lazy'
+//             />
+//           </div>
+        
+
+//           {/* Right: Username, Profile, Datasolve Logo */}
+//           <div className="flex items-center gap-4 sm:gap-6 ml-auto">
+         
+// {/*           
+//             {user ? (
+//               <>
+               
+              
+//                 <span className="text-sm sm:text-base text-primary-600 whitespace-nowrap">{user.firstname || "User"}</span>
+//                 <div className="w-10 h-10 rounded-full bg-cover bg-center border-2 border-primary-200 flex-shrink-0">
+//                   <img
+//                     src={user.profilelink || defaultProfilePicture}
+//                     alt="User Profile"
+//                     style={{ width: 40, height: 40, borderRadius: 30 }}
+//                   />
+//                 </div>
+//               </>
+//             ) : (
+//               <div className="text-sm sm:text-base text-gray-500 whitespace-nowrap">Not Logged In</div>
+//             )} */}
+
+            
+//    <img
+//               src={elicitalogo}
+//               alt="Elicita New Version"
+//               className="h-[50px] sm:h-14 md:h-13"
+//               loading='lazy'
+//             />
+         
+//           </div>
+
+//         </div>
+//       </div>
+//     </header>
+//   );
+// };
+
+// export default Header;
 

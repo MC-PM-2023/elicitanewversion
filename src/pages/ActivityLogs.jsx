@@ -54,18 +54,6 @@ const ActivityLogs = () => {
           <table className="w-full text-left border-collapse">
             <thead className="bg-gray-800 text-gray-400">
               <tr>
-                {/* {["Name", "Time", "Email", "Keyword", "Date", "Searched Table", "Login Time", "Status"].map(
-                  (header, index) => (
-                    <th
-                      key={index}
-                      className="p-4 text-sm font-semibold cursor-pointer hover:text-white"
-                      onClick={() => sortData(header.toLowerCase())}
-                    >
-                      {header}
-                    </th>
-                  )
-                )} */}
-
                 {tableHeader.map((header,index)=>(
                   <th key={index} className="p-4 text-sm font-semibold" style={{backgroundColor:"#23748C", color:"#dfdfdf"}}>{header}</th>
                 ))}

@@ -3,7 +3,28 @@
 
 *{
     font-family: "Poppins", sans-serif;  
- 
+
+}
+.names {
+  background-image: url("https://storage.googleapis.com/my-react-image-bucket-123/Background%20Images/Background99.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;       
+  background-position: center; 
+ min-height: 100vh;
+}
+.glassmorphism{
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(227, 228, 230, 0.75);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+}
+.backgroundlanding{
+  background-image: url("https://storage.googleapis.com/my-react-image-bucket-123/Background%20Images/Background93.jpg");  
+  background-repeat: no-repeat;
+  background-size: cover;       
+  background-position: center; 
+ min-height: 100vh; 
 }
 
 @keyframes pulse-once {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import '../App.css';
 
 const Landingpage = () => {
   const [user, setUser] = useState(null);
@@ -14,10 +15,12 @@ const Landingpage = () => {
     }
   }, []);
 
+ 
+
   return (
     <div>
       <Header />
-      <div className="min-h-screen flex flex-col justify-between">
+      <div className="min-h-screen flex flex-col justify-between backgroundlanding ">
         {/* Hero Section */}
         <section className="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20">
           {/* Left: Welcome Message */}
@@ -25,9 +28,12 @@ const Landingpage = () => {
             <h1 className="text-4xl font-extrabold text-gray-800 mb-6">
               Welcome to Elicita <span className="text-purple-600">2.0</span>
             </h1>
-            <p className="text-lg text-gray-600 mb-8">
+            <p className="text-lg text-gray-800 mb-8">
               Experience the next level of productivity with our upgraded features.
             </p>
+            <p className="text-lg text-gray-600 mb-8 italic text-bold">
+            Seek and Shall Find.
+            </p>    
             <button
               className="px-8 py-3 bg-purple-600 text-white rounded-lg shadow-lg text-lg hover:bg-purple-700 focus:outline-none"
               onClick={() => navigate("/elicitanewversion")}
@@ -38,31 +44,33 @@ const Landingpage = () => {
 
           {/* Right: Profile Card */}
           <div className="w-full md:w-1/2 flex justify-center">
-            <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm text-center">
+            <div className="bg-white shadow-lg rounded-lg  w-[350px]  text-center rounded-xl">
               <img
                 src={
                   user?.profilelink && user.profilelink !== "null"
                     ? user.profilelink
                     : "https://i.pravatar.cc/150?img=3"
                 }
+              
                 alt="Profile"
-                className="w-24 h-24 rounded-full mx-auto mb-4 object-contain"
+                className="rounded-lg"
+               
               />
-              <h2 className="text-xl font-semibold text-gray-800">
+              {/* <h2 className="text-xl font-semibold text-gray-800">
                 {user ? `${user.firstname} ${user.lastname}` : "Guest User"}
               </h2>
               <p className="text-gray-500 text-sm">
                 {user?.role || "Product Manager"}
-              </p>
-              <p className="text-gray-600 mt-2">
+              </p> */}
+              {/* <p className="text-gray-600 mt-2">
                 Leading the Elicita upgrade journey.
-              </p>
+              </p> */}
             </div>
           </div>
         </section>
 
         {/* Features Section */}
-        <section className="w-full bg-white py-20">
+        {/* <section className="w-full bg-white py-20">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
             {[
               {
@@ -89,7 +97,7 @@ const Landingpage = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* Footer Section */}
         <Footer />

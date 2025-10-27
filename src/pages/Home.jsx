@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import ColumnSelector from '../components/ColumnSelector';
 import Modal from '../components/Modal';
 import ResultsTable from '../components/ResultsTable';
@@ -11,6 +11,9 @@ import { CirclePlus } from 'lucide-react';
 import { motion,AnimatePresence, color } from 'framer-motion';
 import '../App.css'
 import { useAddAssignee } from '../hooks/useAddassignee';
+import { ArrowUp, Columns2 } from "lucide-react"; // icons
+
+
 
 const colorMap = {
   'Assignee_Table': 'purple',
@@ -24,7 +27,45 @@ export default function Home() {
   const { columns, multiColumns, loading: loadingColumns, error: columnError } = useColumns();
   const { results,setResults, loading: loadingSearch, error: searchError, search } = useSearch();
   const{datas,error,loading,saveAddassignee,success}=useAddAssignee()
-  
+  const [showScrollIcons, setShowScrollIcons] = useState(false);
+
+// Show icons only when the user scrolls down
+useEffect(() => {
+  const handleScroll = () => {
+    if (window.scrollY > 200) {
+      setShowScrollIcons(true);
+    } else {
+      setShowScrollIcons(false);
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
+
+
+
+// Scroll to top of the page
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+// Scroll to selected column (cell by ID)
+const scrollToSelectedColumn = () => {
+  if (!selectedColumn) return;
+
+  // Example: ID is based on column name
+  const element = document.getElementById(`column-${selectedColumn}`);
+
+  if (element) {
+    element.scrollIntoView({ behavior: "smooth", block: "center" });
+  } else {
+    alert(`No element found for ${selectedColumn}`);
+  }
+};
+
+
 
   let permissions = {};
   try {
@@ -44,7 +85,6 @@ export default function Home() {
     console.log("Permissions:", permissions);
   }
   
-  
 
 
   const [formData,setFormData]=useState({assigneename:"",productcategory:"",assigneeurl:""})
@@ -53,16 +93,15 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [modalColumn, setModalColumn] = useState(null);
   const[addModal,setAddModal]=useState(false)
+  const [showError, setShowError] = useState(false);
 
   const handleColumnSelect = (column, table) => {
     setSelectedColumn(column);
     setSelectedTable(table);
     setResults([])
+    setSearchTerm("")
   };
 
-
-
-  
 
   const handleSearch = () => {
 
@@ -83,24 +122,41 @@ export default function Home() {
     })
   };
 
+  
+
+
   return (
- <div>
-    <Header />
+    <div className=''>
+{showScrollIcons && (
+  <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+    {/* Scroll to Top */}
+    {/* <button
+      onClick={scrollToTop}
+      className="bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-full shadow-lg transition-all"
+      title="Scroll to top"
+    >
+      <ArrowUp size={20} />
+    </button> */}
 
-      <div className="p-8 max-w-7xl mx-auto bg-white rounded-2xl ">
-      
-        <ColumnSelector
-        colorMap={colorMap}
-          columns={columns}
-          multiColumns={multiColumns}
-          onSelect={handleColumnSelect}
-          openModal={setModalColumn}
-          selectedColumn={selectedColumn}
-          selectedTable={selectedTable}
-        />
+    {/* Scroll to Selected Column */}
+    {/* <a
+      href='#columnselector'
+      className="bg-green-600 hover:bg-green-700 text-white p-3 rounded-full shadow-lg transition-all"
+      title="Go Back to Column"
+    >
+     <Columns2 size={20}/>
+    </a> */}
+  </div>
+)}
 
+<Header />
+ <div className='names '>
+   
 
-<div className="bg-white p-5 mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 border border-gray-200 rounded-xl shadow-md">
+      <div className="p-8 max-w-7xl mx-auto bg-white rounded-2xl glassmorphism ">
+     
+     
+      <div className="sticky top-18 z-40 bg-white p-2 mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 border border-gray-200 rounded-xl shadow-md backdrop-blur-sm bg-opacity-95">
   {/* Left: Label + Search */}
   <div className="flex flex-col md:flex-row md:items-center gap-4 flex-1">
     {/* Label */}
@@ -116,14 +172,16 @@ export default function Home() {
       )}
     </div>
 
+
+
     {/* Search Input */}
-    <div className="relative w-full md:w-[300px]">
+    <div className="relative w-full md:w-[250px] ">
       <input
         type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        value={searchTerm} 
+        // aria-valuemax={setSearchTerm(row=>row.filter(indexed,key=><p className='text-center mt-2 mb-1'>{indexed}</p>})
         placeholder={selectedColumn?`Search ${selectedColumn}`:"Search term"}
-        className={`w-full pl-10 pr-4 py-2 rounded-lg border-2 ${
+        className={`w-full pl-8 pr-2 py-2.5 rounded-lg text-sm border-2 ${   
           colorMap[selectedTable]
             ? `border-${colorMap[selectedTable]}-500`
             : 'border-gray-300'
@@ -131,7 +189,20 @@ export default function Home() {
           colorMap[selectedTable] || 'purple'
         }-500 text-gray-700`}
         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+        onFocus={() => setShowError(true)}
+        onChange={(e) => {setSearchTerm(e.target.value)
+           if (e.target.value.trim()!=="") setShowError(false)
+        }}
       />
+       {showError && <span className="inline-block text-red-500 text-center text-xs mt-2">
+  {columnError || searchError}
+</span>
+
+
+}
+
+
+
     
     <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -158,7 +229,7 @@ export default function Home() {
   </div>
 </div> */}
 
-<div className='flex justify-end'>
+<div className='flex justify-end'  id="columnselector">
 {permissions.addAssignee && (
     <button
       className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-medium px-4 py-2 rounded-lg transition-all"
@@ -169,6 +240,17 @@ export default function Home() {
   )}
   </div>
   </div>
+  <ColumnSelector
+        colorMap={colorMap}
+          columns={columns}
+          multiColumns={multiColumns}
+          onSelect={handleColumnSelect}
+          openModal={setModalColumn}
+          selectedColumn={selectedColumn}
+          selectedTable={selectedTable}
+          
+        />
+
 
 {/* Modal (outside of the above row layout) */}
 <AnimatePresence>
@@ -258,12 +340,10 @@ export default function Home() {
 
           </div>
         ) : (
-          <ResultsTable results={results} addModal={addModal} setAddModal={setAddModal} selectedColumn={selectedColumn} selectedTable={selectedTable}/>
+          <ResultsTable results={results} addModal={addModal} setAddModal={setAddModal} selectedColumn={selectedColumn} selectedTable={selectedTable} searchTerm={searchTerm}/>
         )}
 
-        {(columnError || searchError) && (
-          <p className="text-red-500 text-center mt-4">{columnError || searchError}</p>
-        )}
+      
 
         {modalColumn && (
           <Modal
@@ -279,6 +359,7 @@ export default function Home() {
         )}
       </div>
       {/* <Footer/> */}
+      </div>
       </div>
    
     

@@ -1,13 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
-
-const sampleData = [
-  { assignee: "Assignee X", team: "Team Alpha", date: "2023-10-26", status: "In Progress" },
-  { assignee: "Assignee Y", team: "Team Beta", date: "2023-10-25", status: "In Progress" },
-  { assignee: "Assignee Z", team: "Team Gamma", date: "2023-10-24", status: "Completed" },
-  { assignee: "Assignee W", team: "Team Delta", date: "2023-10-23", status: "Pending Review" },
-  { assignee: "Assignee V", team: "Team Epsilon", date: "2023-10-22", status: "In Progress" },
-];
+import useActivityLogs from "../hooks/activityLogs/useActivityLogs";
 
 const statusColors = {
   "In Progress": "bg-blue-100 text-blue-800",
@@ -16,8 +9,19 @@ const statusColors = {
 };
 
 const ActivityLogs = () => {
-  const [data, setData] = useState(sampleData);
+  const { loading, error, logsData, fetchUserActivityLogs } = useActivityLogs();
+  console.log(logsData)
+
   const [sortConfig, setSortConfig] = useState({ key: "assignee", direction: "asc" });
+  const [sortedData, setSortedData] = useState([]);
+
+  useEffect(() => {
+    fetchUserActivityLogs();
+  }, []);
+
+  useEffect(() => {
+    setSortedData(logsData);
+  }, [logsData]);
 
   const sortData = (key) => {
     let direction = "asc";
@@ -25,94 +29,77 @@ const ActivityLogs = () => {
       direction = "desc";
     }
 
-    const sortedData = [...data].sort((a, b) => {
+    const sorted = [...sortedData].sort((a, b) => {
       if (a[key] < b[key]) return direction === "asc" ? -1 : 1;
       if (a[key] > b[key]) return direction === "asc" ? 1 : -1;
       return 0;
     });
 
+  console.log("Sorted is:",sorted)
     setSortConfig({ key, direction });
-    setData(sortedData);
+    setSortedData(sorted);
   };
 
+  if (loading) return <div className="text-center p-6">Loading...</div>;
+  if (error) return <div className="text-red-500 p-6">{error}</div>;
+  
+  const tableHeader=["Name","Time","Email","Keyword","Date","Searched Table","Login Time","Status"]
+
   return (
-    <div className="">
-          <Header />
-    <div className="min-h-screen bg-gray-900 text-gray-200">
-    
-      <div className="p-4">
+    <div>
+      <Header />
+      <div className="min-h-screen bg-white text-black p-4">
         <h1 className="text-2xl font-bold mb-4">Activity Logs</h1>
         <div className="overflow-x-auto rounded-lg shadow-lg">
           <table className="w-full text-left border-collapse">
             <thead className="bg-gray-800 text-gray-400">
               <tr>
-                <th
-                  className="p-4 text-sm font-semibold cursor-pointer hover:text-white"
-                  onClick={() => sortData("assignee")}
-                >
-                  Name
-                </th>
-                <th
-                  className="p-4 text-sm font-semibold cursor-pointer hover:text-white"
-                  onClick={() => sortData("team")}
-                >
-                  Time
-                </th>
-                <th
-                  className="p-4 text-sm font-semibold cursor-pointer hover:text-white"
-                  onClick={() => sortData("date")}
-                >
-                  Email
-                </th>
-                <th
-                  className="p-4 text-sm font-semibold cursor-pointer hover:text-white"
-                  onClick={() => sortData("status")}
-                >
-                  Keyword
-                </th>
-                <th
-                  className="p-4 text-sm font-semibold cursor-pointer hover:text-white"
-                  onClick={() => sortData("status")}
-                >
-                  Date
-                </th>
-                <th
-                  className="p-4 text-sm font-semibold cursor-pointer hover:text-white"
-                  onClick={() => sortData("status")}
-                >
-                  Searched Table
-                </th>
-                <th
-                  className="p-4 text-sm font-semibold cursor-pointer hover:text-white"
-                  onClick={() => sortData("status")}
-                >
-                  Login Time
-                </th>
-                <th
-                  className="p-4 text-sm font-semibold cursor-pointer hover:text-white"
-                  onClick={() => sortData("status")}
-                >
-                  Status
-                </th>
-             
+                {/* {["Name", "Time", "Email", "Keyword", "Date", "Searched Table", "Login Time", "Status"].map(
+                  (header, index) => (
+                    <th
+                      key={index}
+                      className="p-4 text-sm font-semibold cursor-pointer hover:text-white"
+                      onClick={() => sortData(header.toLowerCase())}
+                    >
+                      {header}
+                    </th>
+                  )
+                )} */}
+
+                {tableHeader.map((header,index)=>(
+                  <th key={index} className="p-4 text-sm font-semibold" style={{backgroundColor:"#23748C", color:"#dfdfdf"}}>{header}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {data.map((row, idx) => (
+              {sortedData.map((row, idx) => (
                 <tr
                   key={idx}
-                  className="border-b border-gray-700 hover:bg-gray-800 transition-colors"
+                  className="border-b hover:bg-gray transition-colors"
                 >
-                  <td className="p-4 font-medium">{row.assignee}</td>
-                  <td className="p-4 text-gray-400">{row.team}</td>
-                  <td className="p-4 text-gray-400">{row.date}</td>
-                  <td className="p-4 font-medium">{row.assignee}</td>
-                  <td className="p-4 text-gray-400">{row.team}</td>
-                  <td className="p-4 text-gray-400">{row.date}</td>
-               
-                  <td className="p-4 text-gray-400">{row.team}</td>
-                 
-                  <td className="p-4">
+                  <td className="p-4 text-black">{row.name}</td>
+                  <td className="p-4 text-black">{row.time}</td>
+                  <td className="p-4 text-black">{row.email}</td>
+                  <td className="p-4 text-black">{row.keyword}</td>
+                  <td className="p-4 text-black">{row.date}</td>
+                  <td className="p-4 text-black">{row.tables_searched}</td>
+                  <td className="p-4 text-black">{row.login_time}</td>
+                  <td className="p-4 text-black">{row.status}</td>
+                </tr>
+              ))}
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ActivityLogs;
+
+
+ {/* <td className="p-4">
                     <span
                       className={`px-2 py-1 text-xs font-semibold rounded-full ${
                         statusColors[row.status] || "bg-gray-100 text-gray-800"
@@ -120,16 +107,4 @@ const ActivityLogs = () => {
                     >
                       {row.status}
                     </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    </div>
-  );
-};
-
-export default ActivityLogs;
+                  </td> */}

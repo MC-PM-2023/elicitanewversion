@@ -7,7 +7,7 @@ const useSearch = () => {
 
   const search = async (table, column, query) => {
     if (!table || !column || query.trim() === '') {
-      setError('Please select a column and enter a search term.');
+      setError('Select a column and enter a term.');
       return;
     }
 

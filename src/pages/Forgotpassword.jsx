@@ -93,7 +93,7 @@ export default function ForgotPassword() {
     setFrontendError(""); // clear old validation error
 
     // ✅ Call API
-    // const success=await handleForgotPassword(email);
+    const success=await handleForgotPassword(email);
 
     // ✅ Only navigate when successMsg is received
     if (success) {
@@ -102,8 +102,6 @@ export default function ForgotPassword() {
       }, 1000);
     }
   };
-
-
 
 
   return (

@@ -10,7 +10,7 @@ import { CirclePlus } from 'lucide-react';
 import { motion,AnimatePresence, color } from 'framer-motion';
 import '../App.css'
 import { useAddAssignee } from '../hooks/useAddassignee';
-import { ArrowUp, Columns2 } from "lucide-react"; // icons
+import { ArrowUp, ArrowDownNarrowWide } from "lucide-react"; // icons
 
 
 
@@ -27,6 +27,8 @@ export default function Home() {
   const { results,setResults, loading: loadingSearch, error: searchError, search } = useSearch();
   const{datas,error,loading,saveAddassignee,success}=useAddAssignee()
   const [showScrollIcons, setShowScrollIcons] = useState(false);
+  const [filterTerm, setFilterTerm] = useState('');
+
 
 // Show icons only when the user scrolls down
 useEffect(() => {
@@ -91,12 +93,15 @@ const scrollToSelectedColumn = () => {
   const [modalColumn, setModalColumn] = useState(null);
   const[addModal,setAddModal]=useState(false)
   const [showError, setShowError] = useState(false);
+  const [exactMatch, setExactMatch] = useState(false);
+
 
   const handleColumnSelect = (column, table) => {
     setSelectedColumn(column);
     setSelectedTable(table);
     setResults([])
     setSearchTerm("")
+    setFilterTerm("")
   };
 
 
@@ -158,97 +163,6 @@ const scrollToSelectedColumn = () => {
      
      
       <div className="sticky top-18 z-40 bg-white p-2 mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 border border-gray-200 rounded-xl shadow-md backdrop-blur-sm bg-opacity-95">
-  {/* Left: Label + Search */}
-  <div className="flex flex-col md:flex-row md:items-center gap-4 flex-1">
-    {/* Label */}
-    <div className="text-gray-600 text-xs font-medium">
-      {selectedColumn && selectedTable ? (
-        <span
-          className={`bg-${colorMap[selectedTable] || 'gray'}-200 text-${colorMap[selectedTable] || 'gray'}-800 px-3 py-1 rounded-full block text-center md:inline`}
-        >
-          {selectedTable} &gt; {selectedColumn}
-        </span>
-      ) : (
-        <span className="block text-center md:text-left"> {/* Empty state */} </span>
-      )}
-    </div>
-
-
-
-    {/* Search Input */}
-    <div className="relative w-full md:w-[250px] ">
-      <input
-        type="text"
-        value={searchTerm} 
-        // aria-valuemax={setSearchTerm(row=>row.filter(indexed,key=><p className='text-center mt-2 mb-1'>{indexed}</p>})
-        placeholder={selectedColumn?`Search ${selectedColumn}`:"Search term"}
-        className={`w-full pl-8 pr-2 py-2.5 rounded-lg text-sm border-2 ${   
-          colorMap[selectedTable]
-            ? `border-${colorMap[selectedTable]}-500`
-            : 'border-gray-300'
-        } focus:outline-none focus:ring-0 focus:border-${
-          colorMap[selectedTable] || 'purple'
-        }-500 text-gray-700`}
-        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-        onFocus={() => setShowError(true)}
-        onChange={(e) => {setSearchTerm(e.target.value)
-           if (e.target.value.trim()!=="") setShowError(false)
-        }}
-      />
-    
-       {showError && <span className="inline-block text-red-500 text-center text-xs mt-2">
-  {columnError || searchError}
-</span>
-
-
-
-}
-
-
-
-{/* updated */}
-
-
-  {/* Search icon */}
-  {/* <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-    />
-  </svg>
-
-  {/* Count inside input (on right side) 
-  {results.length > 0 && (
-    <span className="absolute right-3 top-1-translate-y-1/2 text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">
-      {results.length}
-    </span>
-  )} */}
-
-
-    
-    <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute left-3 top-8 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-
-     
-    </div>
-   
-  </div>
 
   {/* Right: Add Assignee Button */}
   {/* <div className="flex justify-end">
@@ -260,6 +174,130 @@ const scrollToSelectedColumn = () => {
     </button>
   </div>
 </div> */}
+
+<div className="flex flex-col md:flex-row md:items-center justify-between gap-4 flex-1">
+
+  {/* LEFT SIDE — Selected Table > Column + Search Input */}
+  <div className="flex flex-col md:flex-row items-center gap-3 text-xs  text-gray-600 font-semibold">
+    {selectedColumn && selectedTable ? (
+      <span
+        className={`bg-${colorMap[selectedTable] || 'gray'}-200 text-${colorMap[selectedTable] || 'gray'}-800 px-3 py-1 rounded-full `}
+      >
+        {selectedTable} &gt; {selectedColumn}
+      </span>
+    ) : (
+      <span className="text-gray-400"></span>
+    )}
+
+    {/* Search Input */}
+    <div className="relative w-full md:w-[250px]">
+  {/* Search input */}
+  <input
+    type="text"
+    value={searchTerm}
+    placeholder={selectedColumn ? `Search ${selectedColumn}` : "Search term"}
+    className={`pl-8 pr-10 py-2 px-3 w-full rounded-lg text-sm border-2 ${
+      colorMap[selectedTable]
+        ? `border-${colorMap[selectedTable]}-500`
+        : "border-gray-300"
+    } focus:outline-none focus:ring-0 focus:border-${
+      colorMap[selectedTable] || "purple"
+    }-500 text-gray-700`}
+    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+    onFocus={() => setShowError(true)}
+    onChange={(e) => {
+      setSearchTerm(e.target.value);
+      if (e.target.value.trim() !== "") setShowError(false);
+    }}
+  />
+
+  {/* 🔍 Search Icon */}
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="absolute left-3 top-7 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+    />
+  </svg>
+  
+  {/* ✅ Result Count inside input */}
+
+  {searchTerm && (
+    <button
+      onClick={() => {
+        setSearchTerm("");
+        setResults([]); // ✅ Clears the previous results
+      }}
+      className="absolute right-15 top-7 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+      title="Clear search"
+    >
+      &times;
+    </button>
+  )}
+  
+
+  {results.length > 0 && (
+    <span className="absolute right-3 top-8 -translate-y-1/2 bg-indigo-100 text-indigo-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-indigo-200">
+      {results.length}
+    </span>
+  )}
+
+  {/* Error message */}
+  {showError && (
+    <span className="block text-red-500 text-xs mt-1 text-center md:text-left">
+      {columnError || searchError}
+    </span>
+  )}
+  
+</div>
+<ArrowDownNarrowWide
+    size={20}
+    className={`cursor-pointer transition-transform duration-200 ${
+      exactMatch ? "text-blue-600 rotate-180" : "text-gray-500"
+    }`}
+    title={exactMatch ? "Exact Match (ON)" : "Partial Match (OFF)"}
+    onClick={() => setExactMatch((prev) => !prev)}
+  />
+  <p className="text-xs text-gray-500 ml-1">
+  {exactMatch ? "Exact match enabled" : ""}
+</p>
+  </div>
+
+  {/* RIGHT SIDE — Results + Filter input */}
+  <div className="flex items-center gap-3">
+    {/* Results count */}
+ {/* {results.length>0 &&  
+ <span className="inline-flex items-center rounded-md bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-indigo-300">
+      Results
+      {results.length > 0 && (
+        <span className="ml-2 bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-full">
+          {results.length ||0}
+        </span>
+      )}
+    </span>
+} */}
+
+    {/* Result filter input */}
+    <input
+  type="text"
+  placeholder="Type to Filter..."
+  className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 "
+  value={filterTerm}
+  onChange={(e) => setFilterTerm(e.target.value)}
+/>
+
+{/* <ArrowDownNarrowWide size={20} className='cursor-pointer' title="Exact Match Filter"/> */}
+
+  </div>
+</div>
+
 
 <div className='flex justify-end'  id="columnselector">
 {permissions.addAssignee && (
@@ -372,7 +410,7 @@ const scrollToSelectedColumn = () => {
 
           </div>
         ) : (
-          <ResultsTable results={results} addModal={addModal} setAddModal={setAddModal} selectedColumn={selectedColumn} selectedTable={selectedTable} searchTerm={searchTerm}/>
+          <ResultsTable results={results} addModal={addModal} setAddModal={setAddModal} selectedColumn={selectedColumn} selectedTable={selectedTable} searchTerm={searchTerm}   filterTerm={filterTerm} exactMatch={exactMatch}  />
         )}
 
       

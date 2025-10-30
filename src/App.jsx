@@ -10,7 +10,6 @@ import Forgotpassword from './pages/Forgotpassword';
 import ResetPassword from './pages/ResetPassword';
 import ActivityLogs from './pages/ActivityLogs';
 
-
 function App() {
   return (
     <Router>

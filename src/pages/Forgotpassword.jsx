@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForgotPassword } from "../hooks/authentication/useForgotPassword";
 import { useNavigate } from "react-router-dom";
+import elicitaicon from "../assets/icons/elicitatitleicon.png";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -37,7 +38,7 @@ export default function ForgotPassword() {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           alt="Your Company"
-          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+          src={elicitaicon}
           className="mx-auto h-10 w-auto"
         />
         <h2 className="mt-10 text-center text-2xl font-bold text-white mb-6">

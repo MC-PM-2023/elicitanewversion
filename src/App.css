@@ -6,9 +6,10 @@
 
 }
 .names {
-  background-image: url("https://storage.googleapis.com/my-react-image-bucket-123/Background%20Images/Background99.jpg");
+  background-image: url("https://storage.googleapis.com/my-react-image-bucket-123/Background%20Images/Background116.jpg");
   background-repeat: no-repeat;
-  background-size: cover;       
+  background-size:cover ;
+  background-attachment: fixed;      
   background-position: center; 
  min-height: 100vh;
 }
@@ -26,6 +27,8 @@
   background-position: center; 
  min-height: 100vh; 
 }
+
+
 
 @keyframes pulse-once {
   0% {

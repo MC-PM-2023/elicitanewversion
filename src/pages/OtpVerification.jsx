@@ -28,7 +28,7 @@ const OtpVerification = () => {
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => {
-        navigate("/login");
+        navigate("/");
       }, 2000); // wait 2 seconds
 
       return () => clearTimeout(timer); // cleanup on unmount

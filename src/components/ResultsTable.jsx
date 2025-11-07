@@ -1146,7 +1146,7 @@ const handleBadgeClick = (e,codes) => {
 
   setModalPosition({
     x: rect.left + rect.width / 2,      // center horizontally at click
-    y: rect.top + window.scrollY + rect.height, // add scroll offset
+    y: rect.top + window.scrollY + rect.height +10, // add scroll offset
   });
 
   setShowProjectCard(true);
@@ -1154,8 +1154,58 @@ const handleBadgeClick = (e,codes) => {
 
 };
 
+//corrected filteredresults
+// const filteredResults = useMemo(() => {
+//   let data = limitedResults || [];
+
+//   // ✅ Filter by selected project
+//   if (
+//     selectedProject &&
+//     ["IPC_CPC_Code", "Reference_Table", "Report_Data"].includes(selectedTable)
+//   ) {
+//     data = data.filter((r) => {
+//       const codes = r.Project_Code
+//         ? r.Project_Code.split(/\s*\|\|\s*|\s*\|\s*/)
+//             .map((c) => c.trim())
+//             .filter(Boolean)
+//         : [];
+//       return codes.includes(selectedProject);
+//     });
+//   }
+
+//   // ✅ Column-level search filter (affected by exactMatch)
+//   if (activeColumn && columnSearch) {
+//     const search = columnSearch.toLowerCase();
+//     data = data.filter((row) => {
+//       const value = row[activeColumn];
+//       if (!value) return false;
+//       const text = value.toString().trim().toLowerCase();
+//       return exactMatch ? text === search : text.includes(search);
+//     });
+//   }
+
+//   // ✅ Global keyword filter (Filter Results input)
+//   if (filterTerm.trim() !== "") {
+//     const lowerFilter = filterTerm.toLowerCase();
+//     data = data.filter((row) =>
+//       Object.values(row).some(
+//         (val) => val && val.toString().toLowerCase().includes(lowerFilter)
+//       )
+//     );
+//   }
+
+//   return data;
+// }, [
+//   limitedResults,
+//   activeColumn,
+//   columnSearch,
+//   selectedProject,
+//   selectedTable,
+//   filterTerm,
+//   exactMatch, // ✅ include dependency
+// ]);
 const filteredResults = useMemo(() => {
-  let data = limitedResults || [];
+  let data = results || []; // ✅ Use full dataset, not limited results
 
   // ✅ Filter by selected project
   if (
@@ -1164,26 +1214,24 @@ const filteredResults = useMemo(() => {
   ) {
     data = data.filter((r) => {
       const codes = r.Project_Code
-        ? r.Project_Code.split(/\s*\|\|\s*|\s*\|\s*/)
-            .map((c) => c.trim())
-            .filter(Boolean)
+        ? r.Project_Code.split(/\s*\|\|\s*|\s*\|\s*/).map((c) => c.trim()).filter(Boolean)
         : [];
       return codes.includes(selectedProject);
     });
   }
 
-  // ✅ Column-level search filter (affected by exactMatch)
+  // ✅ Column-level search filter (handles exact match)
   if (activeColumn && columnSearch) {
-    const search = columnSearch.toLowerCase();
+    const search = columnSearch.trim().toLowerCase();
     data = data.filter((row) => {
       const value = row[activeColumn];
       if (!value) return false;
-      const text = value.toString().toLowerCase();
+      const text = value.toString().trim().toLowerCase();
       return exactMatch ? text === search : text.includes(search);
     });
   }
 
-  // ✅ Global keyword filter (Filter Results input)
+  // ✅ Global keyword filter
   if (filterTerm.trim() !== "") {
     const lowerFilter = filterTerm.toLowerCase();
     data = data.filter((row) =>
@@ -1193,16 +1241,18 @@ const filteredResults = useMemo(() => {
     );
   }
 
-  return data;
+  // ✅ Apply limit AFTER filtering
+  return data.slice(0, 50);
 }, [
-  limitedResults,
+  results,
   activeColumn,
   columnSearch,
   selectedProject,
   selectedTable,
   filterTerm,
-  exactMatch, // ✅ include dependency
+  exactMatch,
 ]);
+
 
 
 
@@ -1482,8 +1532,8 @@ if (selectedTable === "IPC_CPC_Code" && col === "Project_Code") {
                 transition-colors
               "
             
-            onClick={() => {
-            handleBadgeClick(event,codes)
+            onClick={(e) => {
+            handleBadgeClick(e,codes)
             }}
           >
             {code}

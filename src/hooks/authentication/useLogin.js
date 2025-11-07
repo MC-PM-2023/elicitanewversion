@@ -18,6 +18,7 @@ export const useLogin = () => {
         // ✅ Store token and user info in localStorage
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("role",response.data.role)
 
         // ✅ Redirect to your protected route
         navigate("/landingpage");

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSignup } from "../hooks/authentication/useSignup";
 import { NavLink, useNavigate } from "react-router-dom";
+import elicitaicon from "../assets/icons/elicitatitleicon.png";
 
 export default function Signup() {
   const { error: backendError, loading, data, saveSignupdetails } = useSignup();
@@ -54,7 +55,7 @@ export default function Signup() {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           alt="datasolveanalytics"
-          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+          src={elicitaicon}
           className="mx-auto h-10 w-auto"
         />
         <h2 className="mt-4 text-center text-2xl font-bold tracking-tight text-white">
@@ -120,7 +121,7 @@ export default function Signup() {
         <p className="mt-10 text-center text-sm text-gray-400">
           Already have an account?{" "}
           <NavLink
-            to="/login"
+            to="/"
             className="font-semibold text-indigo-400 hover:text-indigo-300"
           >
             Sign in

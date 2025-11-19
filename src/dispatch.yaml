@@ -1,0 +1,12 @@
+dispatch:
+  # Route subdomain pubdock.datasolve-analytics.net to service "pubdock"
+  - url: "elicita-2-0.datasolve-analytics.net/*"  
+    service: elicita-2-0 
+
+  # Root domain → default service
+  - url: "datasolve-analytics.net/*"
+    service: default
+
+  # www domain → default service
+  - url: "www.datasolve-analytics.net/*"
+    service: default

@@ -218,12 +218,14 @@ const Header = () => {
             )}
 
             {/* RIGHTMOST: Elicita Logo */}
+            <Link to="/landingpage">
             <img
               src={elicitalogo}
               alt="Elicita Logo"
               className="h-[50px] sm:h-14 md:h-13"
               loading="lazy"
             />
+            </Link>
           </div>
         </div>
       </div>

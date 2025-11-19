@@ -1,0 +1,28 @@
+# runtime: nodejs20
+# env: standard
+# service: elicita-2-0
+# entrypoint: npx serve -s dist -l $PORT
+
+# automatic_scaling:
+#   min_instances: 0         # ZERO = no cost when idle
+#   max_instances: 1         # 1 instance max
+#   min_idle_instances: 0    # keep ZERO idle servers
+#   max_idle_instances: 0    # Google never keeps extra
+#   target_cpu_utilization: 0.85
+#   max_pending_latency: 2000ms
+
+
+runtime: nodejs20
+env: standard
+service: elicita-2-0
+entrypoint: npx serve -s dist -l $PORT
+
+instance_class: F1   # smallest & cheapest
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 1
+  min_idle_instances: 0
+  max_idle_instances: 0
+  target_cpu_utilization: 0.85
+  max_pending_latency: 5000ms

@@ -563,6 +563,8 @@ export default function Home() {
     setResults([]);
     setSearchTerm("");
     setFilterTerm("");
+   
+  
   }, []);
 
   const handleSearch = useCallback(() => {
@@ -585,16 +587,70 @@ export default function Home() {
   };
 
   // ---------- Filtered Results ----------
+  // const filteredResults = useMemo(() => {
+  //   if (!filterTerm) return results;
+  //   return results.filter((item) => {
+  //     const value =
+  //       typeof item === "string" ? item : item[selectedColumn] || "";
+  //     return exactMatch
+  //       ? value === filterTerm
+  //       : value.toLowerCase().includes(filterTerm.toLowerCase());
+  //   });
+  // }, [results, filterTerm, selectedColumn, exactMatch]);
+
+  // const filteredResults = useMemo(() => {
+  //   if (!results) return [];
+  
+  //   return results.filter((item) => {
+  //     // Get the value for the selected column, default to empty string if not found
+  //     const value = typeof item === "string" ? item : item[selectedColumn] || "";
+  
+  //     // Trim and convert to lower case for consistent comparison (both exact and partial)
+  //     const normalizedValue = value.trim().toLowerCase();
+  //     const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+  
+  //     if (!searchTerm) return true; // If no search term, show all results
+  
+  //     if (exactMatch) {
+  //       // Exact match filtering (case insensitive and no leading/trailing spaces)
+  //       return normalizedValue === normalizedSearchTerm;
+  //     } else {
+  //       // Partial match filtering (case insensitive)
+  //       return normalizedValue.includes(normalizedSearchTerm);
+  //     }
+  //   });
+  // }, [results, searchTerm, selectedColumn, exactMatch]);
+  
+
   const filteredResults = useMemo(() => {
-    if (!filterTerm) return results;
-    return results.filter((item) => {
-      const value =
-        typeof item === "string" ? item : item[selectedColumn] || "";
-      return exactMatch
-        ? value === filterTerm
-        : value.toLowerCase().includes(filterTerm.toLowerCase());
-    });
-  }, [results, filterTerm, selectedColumn, exactMatch]);
+    if (!results) return [];
+  
+    return results
+      .filter(item => {
+        // Column search filter
+        if (!selectedColumn) return true;
+        const value = typeof item === "string" ? item : item[selectedColumn] || "";
+        const normalizedValue = value.trim().toLowerCase();
+        const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+  
+        if (!searchTerm) return true;
+  
+        return exactMatch
+          ? normalizedValue === normalizedSearchTerm
+          : normalizedValue.includes(normalizedSearchTerm);
+      })
+      .filter(item => {
+        // "Type to Filter..." input filter
+        if (!filterTerm) return true;
+        const value = typeof item === "string" ? item : item[selectedColumn] || "";
+        const normalizedValue = value.trim().toLowerCase();
+        const normalizedFilterTerm = filterTerm.trim().toLowerCase();
+  
+        return normalizedValue.includes(normalizedFilterTerm);
+      });
+  }, [results, searchTerm, filterTerm, selectedColumn, exactMatch]);
+  
+ 
 
   // ---------- UI ----------
   return (
@@ -722,6 +778,16 @@ export default function Home() {
     title="Exact Match (ON)"
     onClick={() => setExactMatch(false)}
   />
+//   <img
+//   src={exactMatch ? switchon : switchoff}
+//   alt={exactMatch ? "Exact Match On" : "Partial Match Off"}
+//   width={25}
+//   height={25}
+//   className="cursor-pointer transition-transform duration-200"
+//   title={exactMatch ? "Exact Match (ON)" : "Partial Match (OFF)"}
+//   onClick={() => setExactMatch(!exactMatch)}
+// />
+
 ) : (
   <img
     src={switchoff}
@@ -749,7 +815,7 @@ export default function Home() {
               onChange={(e) => setFilterTerm(e.target.value)}
             />
 
-            {results.length > 0 && filterTerm && (
+            {filteredResults.length > 0 && filterTerm && (
               <span className="absolute right-4 top-8 -translate-y-1/2 bg-indigo-100 text-indigo-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-gray-300">
                 {filteredResults.length}
               </span>
@@ -758,7 +824,7 @@ export default function Home() {
         </div>
 
         {/* Add Assignee Button */}
-        {permissions.addAssignee && (
+        {/* {permissions.addAssignee && (
           <div className="flex justify-end" id="columnselector">
             <button
               className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-medium px-4 py-2 rounded-lg transition-all"
@@ -767,7 +833,7 @@ export default function Home() {
               Add Assignee <CirclePlus size={16} />
             </button>
           </div>
-        )}
+        )} */}
 
         {/* Column Selector */}
         <Suspense fallback={<div className="text-center p-4">Loading...</div>}>
@@ -907,11 +973,11 @@ export default function Home() {
           </Suspense>
         )}
 
-{results.length > 0 && (
+{/* {results.length > 0 && (
   <p className="text-sm text-gray-500 mb-2">
     Search performed by: <span className="font-semibold">{userName}</span>
   </p>
-)}
+)} */}
 
         
       </div>

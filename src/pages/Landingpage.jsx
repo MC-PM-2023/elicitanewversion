@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import '../App.css';
+import Services from "../components/Services";
 
 const Landingpage = () => {
   const [user, setUser] = useState(null);
@@ -59,7 +60,7 @@ const Landingpage = () => {
             </div>
           </div>
         </section>
-
+{/* <Services/> */}
         {/* Footer Section */}
         <Footer />
       </div>

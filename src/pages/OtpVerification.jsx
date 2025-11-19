@@ -146,12 +146,12 @@ const OtpVerification = () => {
           </div>
         </form>
 
-        <div className="text-sm text-slate-500 mt-4">
+        {/* <div className="text-sm text-slate-500 mt-4">
           Didn’t receive the code?{" "}
           <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">
             Resend
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   );

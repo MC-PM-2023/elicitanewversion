@@ -168,7 +168,7 @@ const Header = () => {
           
           {/* LEFT: Datasolve Logo */}
           <div className="flex items-center">
-            <Link to="/landingpage">
+            <Link to="/home">
               <img
                 src={datasolvelogo}
                 alt="Datasolve Logo"
@@ -218,7 +218,7 @@ const Header = () => {
             )}
 
             {/* RIGHTMOST: Elicita Logo */}
-            <Link to="/landingpage">
+            <Link to="/home">
             <img
               src={elicitalogo}
               alt="Elicita Logo"

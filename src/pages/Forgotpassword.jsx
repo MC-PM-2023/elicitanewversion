@@ -27,7 +27,7 @@ export default function ForgotPassword() {
     // ✅ Only navigate when successMsg is received
     if (success) {
       setTimeout(() => {
-        navigate("/resetpassword", { state: { email } });
+        navigate("/reset-password", { state: { email } });
       }, 1000);
     }
   };

@@ -155,7 +155,7 @@ e.preventDefault();
 
 try {
 const response = await handleLogin(formData);
-      console.log("Login response:", response);
+//       console.log("Login response:", response);
 
  // 1. Handle OTP Required Response
       // The API returns success: false, but with a specific 'OTP required' message.
@@ -171,7 +171,7 @@ if (response?.success) {
  const now = new Date();
 // NOTE: You should get 'otp_reverify_until' only when success is true
         const reverify = new Date(response.otp_reverify_until); 
-        console.log("Current time:", now.toISOString(), "Reverify until:", reverify.toISOString());
+//         console.log("Current time:", now.toISOString(), "Reverify until:", reverify.toISOString());
 
         // 2a. Re-verification Window Expired (The condition that seems redundant based on your backend response)
         // If the backend correctly returns the 'OTP required' message (as per the console log) 
@@ -198,7 +198,7 @@ if (response?.success) {
         if (response.role.toLowerCase() === "admin") {
           navigate("/admin");
         } else {
-          navigate("/landingpage");
+          navigate("/home");
         }
       }
     } catch (err) {
@@ -251,7 +251,7 @@ if (response?.success) {
               </label>
               <div className="text-sm">
                 <NavLink
-                  to="/forgotpassword"
+                  to="/forgot-password"
                   className="font-semibold text-indigo-400 hover:text-indigo-300"
                 >
                   Forgot password?

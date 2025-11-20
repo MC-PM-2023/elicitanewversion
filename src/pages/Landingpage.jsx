@@ -37,7 +37,7 @@ const Landingpage = () => {
             </p>    
             <button
               className="px-8 py-3 bg-purple-600 text-white rounded-lg shadow-lg text-lg hover:bg-purple-700 focus:outline-none"
-              onClick={() => navigate("/elicitanewversion")}
+              onClick={() => navigate("/search")}
             >
               Get Started
             </button>

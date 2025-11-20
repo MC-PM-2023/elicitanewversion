@@ -34,7 +34,7 @@ const ProtectedRoute = ({ children, roleRequired }) => {
   // Role check
   if (roleRequired && userRole !== roleRequired) {
     // Redirect to their proper page if role mismatch
-    return <Navigate to={userRole === "admin" ? "/admin" : "/landingpage"} replace />;
+    return <Navigate to={userRole === "admin" ? "/log" : "/home"} replace />;
   }
 
   return children;

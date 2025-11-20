@@ -287,7 +287,7 @@ function App() {
             }
           />
 
-          {/* Admin Route */}
+          {/* Admin Routes */}
           <Route
             path="/log"
             element={
